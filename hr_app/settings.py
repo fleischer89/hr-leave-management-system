@@ -110,7 +110,7 @@ FILE_UPLOAD_HANDLERS = (
     'django.core.files.uploadhandler.TemporaryFileUploadHandler'
 )
 
-WSGI_APPLICATION = 'barbex_tech.wsgi.application'
+WSGI_APPLICATION = 'hr_app.wsgi.application'
 
 
 # Database
