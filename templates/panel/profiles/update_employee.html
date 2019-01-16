@@ -1,0 +1,697 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    {% load website_extras %}
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Update Employee<small class="hide">Optional description</small></h1>
+            <ol class="breadcrumb hide">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if employees %}
+                                    <h3>{{ employees.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Employees</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-user"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-info">
+                <div class="box-header">
+
+                </div>
+                <div class="box-body">
+                    <form id="js-add-new-employee" method="post" action="/panel/{{ user.id }}/update_employee/{{ employee.id }}/"
+                          enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="form-group has-feedback">
+                                    <input name="user_profile_id" type="hidden" value="{{ emp.user.id }}" />
+                                    {% if emp_photo %}
+                                        <img src="/media/{{ employee_photo.document.name }}" class="img-thumbnail"
+                                             alt="User Image" style="width: 150px;">
+                                    {% else %}
+                                        <input name="employee_photo" type="file" class="form-control"
+                                               placeholder="Photograph">
+                                    {% endif %}
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Title</label>
+                                    <input name="employee_title" type="text" class="form-control"
+                                           placeholder="Title" value="{{ emp.user.title }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>First Name</label>
+                                    <input name="first_name" type="text" class="form-control"
+                                           value="{{ emp.user.first_name }}" />
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Last Name</label>
+                                    <input name="last_name" type="text" class="form-control" placeholder="Last Name"
+                                           value="{{ emp.user.last_name }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Other Names</label>
+                                    <textarea name="other_names" class="form-control" placeholder="Other Names"
+                                              value="{{ emp.user.other_names }}"></textarea>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Phone Number</label>
+                                    <input name="phone" type="text" class="form-control" placeholder="Phone number"
+                                           value="{{ emp.user.phone }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Second Phone Number</label>
+                                    <input name="second_phone" type="text" class="form-control"
+                                           placeholder="2nd Phone number" value="{{ emp_info.second_phone }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Email</label>
+                                    <input name="email" type="text" class="form-control" placeholder="Email"
+                                           value="{{ emp.user.email }}">
+                                </div>
+                                <div class="form-group has-feedback form-inline">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="gender" id="gender" value="Male" {% if emp.user.gender == 'Male' %}checked{% endif %}>
+                                            Male
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="gender" id="gender" value="Female" {% if emp.user.gender == 'Female' %}checked{% endif %}>
+                                            Female
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback form-inline">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="marital_status" id="marital_status" value="Single" {% if emp.user.marital_status == 'Single' %}checked{% endif %}>
+                                            Single
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="marital_status" id="marital_status" value="Married" {% if emp.user.marital_status == 'Married' %}checked{% endif %}>
+                                            Married
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="marital_status" id="marital_status" value="Divorced" {% if emp.user.marital_status == 'Divorced' %}checked{% endif %}>
+                                            Divorced
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="marital_status" id="marital_status" value="Widowed" {% if emp.user.marital_status == 'Widowed' %}checked{% endif %}>
+                                            Widowed
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Social Security Number</label>
+                                    <input name="social_security_no" type="text" class="form-control"
+                                           placeholder="Social Security Number" value="{{ emp_info.social_security_number }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Spouse's Name</label>
+                                    <input name="spouse_name" type="text" class="form-control"
+                                           placeholder="Spouse's Name" value="{{ emp_info.spouse_name }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Spouse's Phone</label>
+                                    <input name="spouse_phone" type="text" class="form-control"
+                                           placeholder="Spouse's Phone Number" value="{{ emp_info.spouse_phone }}">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="form-group has-feedback">
+                                    <label>Date of Birth</label>
+                                    <input class="input-sm input-s datepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="dob_date" data-date-format="yyyy-mm-dd" placeholder="Date of Birth"
+                                           value="{{ emp.user.dob | format_date:'%Y-%m-%d' }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="user_info_id" type="hidden" value="{{ emp_info.id }}" />
+                                    <label>Place of Birth</label>
+                                    <textarea name="place_of_birth" class="form-control" placeholder="Place of Birth">{{ emp_info.place_of_birth }}</textarea>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Nationality</label>
+                                    <input name="nationality" type="text" class="form-control" placeholder="Nationality"
+                                           value="{{ emp_info.nationality }}" />
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Ethnicity</label>
+                                    <input name="ethnicity" type="text" class="form-control" placeholder="Ethnicity"
+                                           value="{{ emp_info.ethnicity }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Hometown</label>
+                                    <input name="hometown" type="text" class="form-control" placeholder="Hometown"
+                                           value="{{ emp_info.hometown }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Languages</label>
+                                    <input name="languages" type="text" class="form-control" placeholder="Languages"
+                                           value="{{ emp_info.languages }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Region</label>
+                                    <input name="region" type="text" class="form-control" placeholder="Region"
+                                           value="{{ emp_info.region }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Country of Residence</label>
+                                    <input name="residence_country" type="text" class="form-control"
+                                           placeholder="Country of Residence" value="{{ emp_info.residence_country }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>City of Residence</label>
+                                    <input name="residence_city" type="text" class="form-control"
+                                           placeholder="City of Residence" value="{{ emp_info.residence_city }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Postal Address</label>
+                                    <textarea name="postal" class="form-control" placeholder="Postal Address">{{ emp_info.postal }}</textarea>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Residential Address</label>
+                                    <textarea name="residential" class="form-control" placeholder="Residence">{{ emp_info.residential }}</textarea>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Interests</label>
+                                    <textarea name="interests" class="form-control" placeholder="Interests / Hobbies">{{ emp_info.interests }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Job Information</h4>
+                                <div class="form-group has-feedback">
+                                    <label>Title</label>
+                                    <input name="job_title" type="text" class="form-control"
+                                           placeholder="Job Title" value="{{ emp.job_title }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>
+                                        <select name="department_id" class="form-control">
+                                            <option value="0">Please Select Employee's Department</option>
+                                            {% for department in departments %}
+                                                <option value="{{ department.id }}" {% if emp.department.id == department.id %}selected{% endif %}>{{ department.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Work Location</label>
+                                    <input name="work_location" type="text" class="form-control"
+                                           placeholder="Work Location" value="{{ emp.office_location }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Work Email</label>
+                                    <input name="work_email" type="text" class="form-control"
+                                           placeholder="Work Email" value="{{ emp.office_email }}">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Work Phone</label>
+                                    <input name="work_phone" type="text" class="form-control"
+                                           placeholder="Work Phone Number" value="{{ emp.office_phone }}">
+                                </div>
+                                {% if emp.start_date %}
+                                    <div class="form-group has-feedback">
+                                        <label>Work Start Date</label>
+                                        <input class="input-sm input-s datepicker-input form-control" type="text"
+                                               style="font-size: 14px" name="work_start_date" data-date-format="yyyy-mm-dd"
+                                               placeholder="Start Date"
+                                               value="{{ emp.start_date | format_date:'%Y-%m-%d' }}">
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <h4>Dependents Information</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Photograph</th>
+                                            <th>Name</th>
+                                            <th>Relationship</th>
+                                            <th>Date of Birth</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for dependent in dependents %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        {% if dependent.photo %}
+                                                            <img src="/media/{{ dependent.photo.document.name }}" class="img-thumbnail"
+                                                                 alt="User Image" style="width: 50px;">
+                                                        {% else %}
+                                                            <input name="dependent_photo_{{ dependent.id }}"
+                                                                   type="file" class="form-control"
+                                                                   placeholder="Photograph">
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="dependent_id" type="hidden" value="{{ dependent.id }}" />
+                                                        <input name="dependent_name_{{ dependent.id }}" type="text"
+                                                               class="form-control" placeholder="Name"
+                                                               value="{{ dependent.name }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <label for="dependent_relationship_{{ dependent.id }}">
+                                                            <select name="dependent_relationship_{{ dependent.id }}"
+                                                                    id="dependent_relationship_{{ dependent.id }}"
+                                                                    class="form-control">
+                                                                <option {% if dependent.relationship == 'Husband' %}selected{% endif %} value="Husband">Husband</option>
+                                                                <option {% if dependent.relationship == 'Wife' %}selected{% endif %} value="Wife">Wife</option>
+                                                                <option {% if dependent.relationship == 'Son' %}selected{% endif %} value="Son">Son</option>
+                                                                <option {% if dependent.relationship == 'Daughter' %}selected{% endif %} value="Daughter">Daughter</option>
+                                                                <option {% if dependent.relationship == 'Father' %}selected{% endif %} value="Father">Father</option>
+                                                                <option {% if dependent.relationship == 'Mother' %}selected{% endif %} value="Mother">Mother</option>
+                                                                <option {% if dependent.relationship == 'Brother' %}selected{% endif %} value="Brother">Brother</option>
+                                                                <option {% if dependent.relationship == 'Sister' %}selected{% endif %} value="Sister">Sister</option>
+                                                                <option {% if dependent.relationship == 'Other' %}selected{% endif %} value="Other">Other</option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input class="input-sm input-s datepicker-input form-control"
+                                                           type="text" style="font-size: 14px"
+                                                           name="dependent_dob_{{ dependent.id }}"
+                                                           data-date-format="yyyy-mm-dd"
+                                                           value="{{ dependent.date_of_birth | format_date:'%Y-%m-%d' }}"
+                                                           placeholder="Date of Birth">
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Provident Fund Beneficiaries</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Relationship</th>
+                                            <th>Date of Birth</th>
+                                            <th>Telephone</th>
+                                            <th>Email</th>
+                                            <th>Percentage to be given</th>
+                                            <th>Residential Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for beneficiary in beneficiaries %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="beneficiary_id" type="hidden" value="{{ beneficiary.id }}" />
+                                                        <input name="beneficiary_name_{{ beneficiary.id }}" type="text" class="form-control"
+                                                               placeholder="Full Name" value="{{ beneficiary.full_name }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <label for="beneficiary_relationship_{{ beneficiary.id }}">
+                                                            <select name="beneficiary_relationship_{{ beneficiary.id }}"
+                                                                    id="beneficiary_relationship_{{ beneficiary.id }}"
+                                                                    class="form-control">
+                                                                <option {% if beneficiary.relationship == 'Husband' %}selected{% endif %} value="Husband">Husband</option>
+                                                                <option {% if beneficiary.relationship == 'Wife' %}selected{% endif %} value="Wife">Wife</option>
+                                                                <option {% if beneficiary.relationship == 'Son' %}selected{% endif %} value="Son">Son</option>
+                                                                <option {% if beneficiary.relationship == 'Daughter' %}selected{% endif %} value="Daughter">Daughter</option>
+                                                                <option {% if beneficiary.relationship == 'Father' %}selected{% endif %} value="Father">Father</option>
+                                                                <option {% if beneficiary.relationship == 'Mother' %}selected{% endif %} value="Mother">Mother</option>
+                                                                <option {% if beneficiary.relationship == 'Brother' %}selected{% endif %} value="Brother">Brother</option>
+                                                                <option {% if beneficiary.relationship == 'Sister' %}selected{% endif %} value="Sister">Sister</option>
+                                                                <option {% if beneficiary.relationship == 'Other' %}selected{% endif %} value="Other">Other</option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input class="input-sm input-s datepicker-input form-control"
+                                                           type="text" style="font-size: 14px"
+                                                           name="beneficiary_dob_{{ beneficiary.id }}"
+                                                           data-date-format="yyyy-mm-dd"
+                                                           value="{{ beneficiary.date_of_birth | format_date:'%Y-%m-%d' }}"
+                                                           placeholder="Date of Birth">
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="beneficiary_phone_{{ beneficiary.id }}" type="text"
+                                                               class="form-control" placeholder="Phone Number"
+                                                               value="{{ beneficiary.phone }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="beneficiary_email_{{ beneficiary.id }}"
+                                                               type="text" class="form-control" placeholder="Email"
+                                                               value="{{ beneficiary.email }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="beneficiary_percentage_{{ beneficiary.id }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Percentage" value="{{ beneficiary.percentage }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <textarea name="beneficiary_address_{{ beneficiary.id }}"
+                                                               rows="2" cols="5" class="form-control"
+                                                               placeholder="Residential Address">{{ beneficiary.residential }}</textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Next of Kin / Emergency Contact Information</h4>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_id" type="hidden" value="{{ emergency_contact.id }}" />
+                                    <input name="emergency_contact_name" type="text" class="form-control"
+                                           placeholder="Full Name" value="{{ emergency_contact.full_name }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_relationship" type="text" class="form-control"
+                                           placeholder="Relationship" value="{{ emergency_contact.relationship }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_phone" type="text" class="form-control"
+                                           placeholder="Phone Number" value="{{ emergency_contact.phone }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_phone_2" type="text" class="form-control"
+                                           placeholder="Second Phone Number" value="{{ emergency_contact.second_phone }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_email" type="text" class="form-control"
+                                           placeholder="Emergency Contact Email" value="{{ emergency_contact.email }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <textarea name="emergency_contact_address" rows="2" class="form-control"
+                                           placeholder="Residential Address">{{ emergency_contact.residential }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Leave Entitlement</h4>
+                                <div class="form-group has-feedback">
+                                    <input name="employee_leave_id" type="hidden" value="{{ employee_leave.id }}" />
+                                    <input name="leave_days_allowed" type="text" class="form-control"
+                                           placeholder="Allowed Leave Days" value="{{ employee_leave.no_of_days_allowed }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div><br/>
+
+                                <h4>Bank Details</h4>
+                                <div class="form-group has-feedback">
+                                    <input name="bank_detail_id" type="hidden" value="{{ bank_detail.id }}" />
+                                    <input name="bank_name" type="text" class="form-control"
+                                           placeholder="Bank / Building Society Name"
+                                           value="{{ bank_detail.bank_name }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="bank_branch" type="text" class="form-control"
+                                           placeholder="Branch" value="{{ bank_detail.branch }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="bank_account_number" type="text" class="form-control"
+                                           placeholder="Account Number" value="{{ bank_detail.account_number }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="bank_account_name" type="text" class="form-control"
+                                           placeholder="Account Name" value="{{ bank_detail.account_name }}">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Educational Background</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Programme</th>
+                                            <th>Qualification</th>
+                                            <th>Institution</th>
+                                            <th>Date From</th>
+                                            <th>Date To</th>
+                                            <th>Is Short Course?</th>
+                                            <th>Present</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for education in education_records %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="education_id" type="hidden" value="{{ education.id }}" />
+                                                        <input name="programme_{{ education.id }}" type="text"
+                                                               class="form-control" placeholder="Programme"
+                                                               value="{{ education.courses }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="qualification_{{ education.id }}" type="text" class="form-control"
+                                                               placeholder="Qualification"
+                                                               value="{{ education.qualification }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="qualification_{{ education.id }}" type="text" class="form-control"
+                                                               placeholder="Institution"
+                                                               value="{{ education.institution }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input class="input-sm input-s datepicker-input form-control"
+                                                               type="text" style="font-size: 14px"
+                                                               name="education_start_date_{{ education.id }}"
+                                                               data-date-format="yyyy-mm-dd" placeholder="From"
+                                                               value="{{ education.start_date | format_date:'%Y-%m-%d' }}">
+                                                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input class="input-sm input-s datepicker-input form-control"
+                                                               type="text" style="font-size: 14px"
+                                                               name="education_end_date_{{ education.id }}"
+                                                               data-date-format="yyyy-mm-dd" placeholder="To"
+                                                               value="{{ education.end_date | format_date:'%Y-%m-%d' }}">
+                                                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" name="short_course_{{ education.id }}"
+                                                                       id="short_course_{{ education.id }}"
+                                                                       value="False" {% if education.short_course %}checked{% endif %}>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" name="short_present_{{ education.id }}"
+                                                                       id="short_present_{{ education.id }}"
+                                                                       value="False" {% if education.present %}checked{% endif %}>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Employee References</h4>
+
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Reference Type</th>
+                                            <th>Organization</th>
+                                            <th>Position</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for reference in references %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="reference_id" type="hidden" value="{{ reference.id }}" />
+                                                        <input name="reference_name_{{ reference.id }}" type="text" class="form-control"
+                                                               placeholder="Full Name" value="{{ reference.name }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <select name="reference_type_{{ reference.id }}"
+                                                                class="form-control">
+                                                            <option {% if reference.type == 'Professional' %}selected{% endif %} value="Professional">Professional</option>
+                                                            <option {% if reference.type == 'Character' %}selected{% endif %} value="Character">Character</option>
+                                                            <option {% if reference.type == 'Other' %}selected{% endif %} value="Other">Other</option>
+
+                                                            <option value="Professional">Professional</option>
+                                                            <option value="Character">Character</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="reference_organization_{{ reference.id }} }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Organization"
+                                                               value="{{ reference.organisation }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="reference_position_{{ reference.id }} }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Position"
+                                                               value="{{ reference.position }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="reference_phone_{{ reference.id }} }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Phone" value="{{ reference.phone }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="reference_email_{{ reference.id }} }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Email" value="{{ reference.email }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <textarea name="reference_address_{{ reference.id }}"
+                                                                  class="form-control" rows="2" rows="2"
+                                                                  placeholder="Address">{{ reference.address }}</textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12">
+
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+                                <br/>
+                                <button name="update_employee" type="submit" class="btn btn-success"
+                                        data-dismiss="modal">
+                                    Update Employee
+                                </button>
+                                &nbsp;
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            {% comment %}Training Leaders, Transforming Generations, Representing Divinity!!!{% endcomment %}
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="http://smartempiregh.com">Smart Empire</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}

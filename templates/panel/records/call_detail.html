@@ -1,0 +1,141 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    {% load website_extras %}
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Page Header<small>Optional description</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if calls %}
+                                    <h4>{{ calls.count }}</h4>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total Calls</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                {% if recent_calls %}
+                                    <h4>{{ recent_calls.count }}</h4>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Recent Calls</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="box box-widget widget-user-2">
+                        <div class="widget-user-header">
+                            <div class="widget-user-image">
+                                <img class="img-circle" src="/media/photographs/{{ top_employee.user.user.username }}.jpg"
+                                     alt="{{ top_employee.user.user.username }}">
+                            </div>
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">
+                                {{ top_employee.user | full_name }}
+                            </h3>
+                            <h5 class="widget-user-desc">Top Caller</h5>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="#">Recent Calls <span class="pull-right badge bg-aqua">{{ recent_calls.count }}</span></a></li>
+                                <li><a href="#">Total Calls <span class="pull-right badge bg-aqua">{{ calls.count }}</span></a></li>
+                                {% comment %}<li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
+                                <li><a href="#">Notes <span class="pull-right badge bg-red">842</span></a></li>{% endcomment %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="box box-solid box-info">
+                        <div class="box-header">
+                            <h4><strong>{{ call.caller_name }}</strong></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        <strong>Date:</strong> {{ call.date }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <strong>Time:</strong> {{ call.time|upper_case }}
+                                    </p>
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        <strong>Caller:</strong> {{ call.custodian.user.user.first_name }}
+                                        {{ call.custodian.user.user.surname }}
+                                    </p>
+                                    <strong>Purpose</strong>
+                                    <p style="text-align: justify; margin-bottom: 10px">{{ call.purpose }}</p>
+                                    <strong>Duration:</strong>
+                                    <p style="text-align: justify; margin-bottom: 10px">{{ call.duration }}</p>
+                                    <strong>Response</strong>
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        {% if call.response %}
+                                            {{ call.response }}
+                                        {% else %}
+                                            No response yet
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="col-md-5">
+                                    <img src="/media/photographs/{{ call.custodian.user.user.username }}.jpg"
+                                     alt="{{ call.custodian.user.user.username }}" class="img-circle"><br/>
+                                    <strong>Notes</strong>
+                                    <p style="text-align: justify">{{ call.notes }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            Anything you want
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2016 <a href="#">DV Unlimited</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}

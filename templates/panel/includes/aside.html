@@ -1,0 +1,74 @@
+    {% load website_extras %}
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    {% if photo %}
+                        <img src="/media/{{ photo.document.name }}" class="img-thumbnail" alt="User Image">
+                    {% else %}
+                        <img src="/media/photographs/avatar_error.jpg" class="img-circle" alt="User Image">
+                    {% endif %}
+                </div>
+                <div class="pull-left info">
+                    <p>{{ user | full_name }}</p>
+                    <!-- Status -->
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+
+            <!-- search form (Optional) -->
+            {# {% include "panel/include/search.html" %} #}
+            <!-- /.search form -->
+
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                <!-- Optionally, you can add icons to the links -->
+                <li><a id="dashboard" href="/panel/{{ user.id }}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                {% comment %}<li><a id="report" href="/panel/{{ user.id }}/report/"><i class="fa fa-bar-chart-o"></i>Reports</a></li>{% endcomment %}
+                {% if show_profiles %}
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-reorder"></i>
+                            <span>Profiles</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                        <ul class="treeview-menu">
+                            <li><a id="departments" href="/panel/{{ user.id }}/departments/"><i class="fa fa-folder"></i>Departments</a></li>
+                            <li><a id="employees" href="/panel/{{ user.id }}/employees/"><i class="fa fa-users"></i>Employees</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-reorder"></i>
+                        <span>Forms</span><i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a id="leave_request" href="/panel/{{ user.id }}/leave_request/"><i class="fa fa-plane"></i>Holiday Requests</a></li>
+                        {% if show_approvals %}
+                            <li><a id="sickness" href="/panel/{{ user.id }}/absence_certification/"><i class="fa fa-hospital-o"></i>Sickness / Absence</a></li>
+                            <li><a id="approval" href="/panel/{{ user.id }}/leave_approval/"><i class="fa fa-check"></i>Leave Approvals</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+
+                {# <li><a id="sickness" href="/panel/{{ user.id }}/sickness/"><i class="fa fa-dashboard"></i>Attendance</a></li>#}
+
+                <li class="hide">
+                    <a id="announcements" href="/panel/{{ user.id }}/announcements/"><i class="fa fa-dashboard"></i>
+                        Announcements
+                    </a>
+                </li>
+
+                <li>
+                    <a id="password" href="/panel/{{ user.id }}/user_password/"><i class="fa fa-lock"></i>
+                        Change Password
+                    </a>
+                </li>
+                <li><a id="log_out" href="/panel/logout/{{ user.id }}"><i class="fa fa-sign-out"></i>Logout</a></li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>

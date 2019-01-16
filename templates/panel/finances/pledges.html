@@ -1,0 +1,79 @@
+            {% load website_extras %}
+            <div id="pledges_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if pledges %}
+                                    <h3>{{ pledges.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>pledges</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/pledges/new/" class="btn btn-info btn-sm">
+                        Enter New Pledge <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Pledges</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="pledges-list" class="display table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Member</th>
+                                        <th>Custodian</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for pledge in pledges %}
+                                        <tr id="{{ pledge.id }}">
+                                            <td>{{ pledge.id }}</td>
+                                            <td>{{ pledge.date }}</td>
+                                            <td>{{ pledge.type }}</td>
+                                            <td>{{ pledge.currency.symbol }}</td>
+                                            <td>{{ pledge.amount | money_format }}</td>
+                                            <td>{{ pledge.member.user.spiritual_name }}</td>
+                                            <td>{{ pledge.custodian }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Member</th>
+                                        <th>Custodian</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+

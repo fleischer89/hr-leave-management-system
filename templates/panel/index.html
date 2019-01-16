@@ -1,0 +1,78 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Page Header<small>Optional description</small></h1>
+            <ol id="page-navigation" class="breadcrumb">
+                <li><a href="/panel/{{ user.id }}/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <input id="current_panel" type="hidden" value="dashboard" />
+            {% include "panel/dashboard.html" %}
+
+            {# Reports #}
+            {# {% include "report/general.html" %} #}
+
+            {# Forms #}
+            {% include "panel/employee/leave_requests.html" %}
+
+            {# Profiles #}
+            {% include "panel/profiles/business.html" %}
+            {% include "panel/profiles/ministries.html" %}
+            {% include "panel/profiles/departments.html" %}
+            {% include "panel/profiles/employees.html" %}
+            {% include "panel/employee/employee_registered.html" %}
+
+            {# Attendance #}
+            {% include "panel/attendance.html" %}
+
+            {# Finances #}
+            {% include "panel/finances/offerings.html" %}
+            {% include "panel/finances/tithe.html" %}
+            {% include "panel/finances/dues.html" %}
+            {% include "panel/finances/commitments.html" %}
+            {% include "panel/finances/sales.html" %}
+            {% include "panel/finances/donations.html" %}
+            {% include "panel/finances/contributions.html" %}
+            {% include "panel/finances/pledges.html" %}
+
+            {# Asset #}
+            {% include "panel/asset/assets.html" %}
+            {% include "panel/asset/equipment_class.html" %}
+            {% include "panel/asset/inventory.html" %}
+            {% include "panel/asset/maintenance.html" %}
+
+            {# Announcements #}
+            {% include "panel/announcements.html" %}
+
+            {% include "panel/users/profiles.html" %}
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            {% comment %}Training Leaders, Transforming Generations, Representing Divinity!!!{% endcomment %}
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="http://smartempiregh.com">
+            Smart Empire</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}

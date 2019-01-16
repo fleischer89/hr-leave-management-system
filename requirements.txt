@@ -1,0 +1,3 @@
+configparser
+sendsms
+django-sendsms

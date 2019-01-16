@@ -1,0 +1,127 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Page Header<small>Optional description</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if assets %}
+                                    <h4>{{ assets.count }}</h4>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total Asset Purchases</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    {% comment %}<div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                {% if invoices %}
+                                    <h4>{{ invoices.count }}</h4>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total Invoices</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>{% endcomment %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="box box-widget widget-user-2">
+                        <div class="widget-user-header">
+                            <div class="widget-user-image">
+                                {% if asset.image %}
+                                    <img src="/static/media/asset {{ asset.id }}.jpg" alt="{{ asset.name }}">
+                                {% else %}
+                                    No Asset Image Available
+                                {% endif %}
+                            </div>
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">{{ asset.name }}</h3>
+                            {# <h5 class="widget-user-desc">Lead Developer</h5> #}
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="#">Quantity Available <span class="pull-right badge bg-blue">{{ asset.quantity }}</span></a></li>
+                                <li><a href="#">Recent Asset Purchases <span class="pull-right badge bg-aqua">{{ recent_assets.count }}</span></a></li>
+                                <li><a href="#">Total Asset Purchases <span class="pull-right badge bg-green">{{ assets.count }}</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="box box-solid box-info">
+                        <div class="box-header">
+                            <h4><strong>{{ asset.name }}</strong></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <strong>Purchase Date</strong>
+                                    <p style="text-align: justify; margin-bottom: 10px">{{ asset.purchase_date }}</p>
+                                    <strong>Cost</strong>
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        {{ asset.currency.symbol }} {{ asset.cost }}
+                                    </p>
+                                    <strong>Quantity Available</strong>
+                                    <p style="text-align: justify; margin-bottom: 10px">{{ asset.quantity }}</p>
+                                    <strong>Description</strong>
+                                    <p style="text-align: justify">{{ asset.notes }}</p>
+                                </div>
+                                <div class="col-md-5">
+                                    <img class="img-responsive thumbnail" src="/static/images/products {{ product.id }}.jpg" />
+
+                                    <strong>Purpose</strong>
+                                    <p style="text-align: justify; margin-bottom: 10px">{{ asset.purpose }}</p>
+                                    <strong>Purchased By:</strong>
+                                    <p style="text-align: justify">
+                                        {{ asset.custodian.user.first_name }} {{ asset.custodian.user.surname }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    {% include "panel/includes/mini_footer.html" %}
+
+{% endblock %}

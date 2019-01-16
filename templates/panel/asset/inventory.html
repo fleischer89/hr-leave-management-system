@@ -1,0 +1,60 @@
+            <div id="inventory_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if count %}
+                                    <h3>{{ count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>unique assets</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Aggregated Assets</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="inventory-list" class="display table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Asset Name</th>
+                                        <th>Asset Type</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for asset in assets %}
+                                        <tr>
+                                            <td>{{ asset.name }}</td>
+                                            <td>{{ asset.type }}</td>
+                                            <td>{{ asset.count }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Asset Name</th>
+                                        <th>Asset Type</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+

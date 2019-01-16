@@ -1,0 +1,80 @@
+            <div id="assets_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if assets %}
+                                    <h3>{{ assets.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Assets</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/assets/new/" class="btn btn-info btn-sm">
+                        Enter New Asset <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Assets</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="asset-list" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ID</th>
+                                        <th>Asset Name</th>
+                                        <th>Quantity</th>
+                                        <th>Currency</th>
+                                        <th>Cost</th>
+                                        <th>Date</th>
+                                        <th>Custodian</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for asset in assets %}
+                                        <tr id="{{ asset.id }}">
+                                            <td>{{ asset.id }}</td>
+                                            <td>{{ asset.label }}</td>
+                                            <td>{{ asset.name }}</td>
+                                            <td>{{ asset.quantity }}</td>
+                                            <td>{{ asset.currency }}</td>
+                                            <td>{{ asset.cost }}</td>
+                                            <td>{{ asset.purchase_date }}</td>
+                                            <td>{{ asset.custodian }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ID</th>
+                                        <th>Asset Name</th>
+                                        <th>Quantity</th>
+                                        <th>Currency</th>
+                                        <th>Cost</th>
+                                        <th>Date</th>
+                                        <th>Custodian</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

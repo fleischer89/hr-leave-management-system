@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    {% load staticfiles %}
+    {% include "panel/includes/register/header.html" %}
+<body class="hold-transition register-page">
+<div class="register-box">
+    <div class="register-logo">
+        <img src="/static/images/logo.png" width="70px" /><br/>
+        <a href="/panel/signup/">Barbex Technical Services Ltd.</a>
+    </div>
+
+    <div id="js-signup-alert" class="alert alert-danger alert-dismissible hide">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4 style="text-align: center"><i class="icon fa fa-warning"></i> Alert!</h4>
+        <p>Warning alert preview. This alert is dismissable.</p>
+    </div>
+    <div class="register-box-body">
+        <p class="login-box-msg">Register a new membership</p>
+        <form action="/panel/signup/" id="js-user-signup" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group has-feedback">
+                <input name="first_name" type="text" class="form-control" placeholder="First Name">
+                {# <input name="session_key" type="hidden" value="{{ request.session.session_key }}" class="form-control"> #}
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="surname"  type="text" class="form-control" placeholder="Last Name">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="age"  type="text" class="form-control" placeholder="Age">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input id="id_user_photo" name="user_photo"  type="file" class="form-control"
+                       placeholder="Upload your photograph">
+                <span class="glyphicon glyphicon-upload form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="email" type="text" class="form-control" placeholder="Email">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="phone" type="text" class="form-control" placeholder="Phone Number">
+                <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <textarea name="address" class="form-control" placeholder="Address"></textarea>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="username" type="text" class="form-control" placeholder="Username">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="password" type="password" class="form-control" placeholder="Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="retyped_password" type="password" class="form-control" placeholder="Retype password">
+                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            <input type="checkbox"> I agree to the <a href="#">terms</a>
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+        {% comment %}<div class="social-auth-links text-center">
+            <p>- OR -</p>
+            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
+                Facebook</a>
+            <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
+                Google+</a>
+        </div>{% endcomment %}
+
+        <a href="/panel/login/" class="text-center">I already have a membership</a>
+    </div>
+    <!-- /.form-box -->
+</div>
+<!-- /.register-box -->
+
+{% include "panel/includes/register/footer.html" %}
+</body>
+</html>

@@ -1,0 +1,339 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    {% load website_extras %}
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Add New Member<small class="hide">Optional description</small></h1>
+            <ol class="breadcrumb hide">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div class="hide" style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if members %}
+                                    <h3>{{ members.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Members</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-info">
+                <div class="box-header">
+
+                </div>
+                <div class="box-body" style="font-size: large; line-height: 30px">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12" style="display: block; margin: auto">
+                            {% if member_photo %}
+                                <img src="/media/{{ member_photo.document.name }}" class="img-thumbnail"
+                                     alt="User Image" style="width: 150px;">
+                            {% else %}
+                                <img src="/media/photographs/avatar_error.jpg" class="img-circle" alt="User Image">
+                            {% endif %}
+                            <br/>
+                            <label>Spiritual Name:</label>
+                            {{ member_profile.spiritual_name }}
+                            <br/>
+                            <label>Ministry:</label>
+                            <span>{{ single_member.ministry.name }}</span>
+
+                            <br/>
+                            <label>Departments:</label><br/>
+                            {% for department in member_departments %}
+                                <span>{{ department.name }}</span><br/>
+                            {% endfor %}
+
+                            <br/>
+                            <label>Name:</label>
+                            <span>{{ member_profile.last_name }}, </span>
+                            <span>{{ member_profile.first_name }}</span>
+                            <span>{{ member_profile.other_names }}</span>
+
+                            <br/>
+                            <label>Phone Number(s):</label>
+                            <span>{{ member_profile.phone }}, </span>
+                            <span>{{ member_info.second_phone }}</span>
+
+                            <br/>
+                            <label>Email(s):</label>
+                            <span>{{ member_profile.email }}, </span>
+                            <span>{{ member_info.second_email }}</span>
+
+                            <br/>
+                            <label>Gender:</label>
+                            <span>{{ member_profile.gender }}</span>
+
+                            <br/>
+                            <label>Marital Status:</label>
+                            <span>{{ member_profile.marital_status }}</span>
+
+                            <br/>
+                            <label>Emergency Contact Name:</label>
+                            {{ member_info.emergency_contact_name }}
+
+                            <br/>
+                            <label>Emergency Contact Phone Number:</label>
+                            {{ member_info.emergency_contact_phone }}
+
+                            <br/>
+                            <label>Emergency Contact Email:</label>
+                            {{ member_info.emergency_contact_email }}
+                        </div>
+
+                        <div class="col-lg-6 col-sm-12">
+                            <label>Date of Birth:</label>
+                            {{ member_profile.dob }}
+
+                            <br/>
+                            <label>Place of Birth:</label>
+                            {{ member_info.place_of_birth }}
+
+                            <br/>
+                            <label>Nationality:</label>
+                            {{ member_info.nationality }}
+
+                            <br/>
+                            <label>Ethnicity:</label>
+                            {{ member_info.ethnicity }}
+
+                            <br/>
+                            <label>Hometown:</label>
+                            {{ member_info.hometown }}
+
+                            <br/>
+                            <label>Region:</label>
+                            {{ member_info.region }}
+
+                            <br/>
+                            <label>Languages:</label>
+                            {{ member_info.languages }}
+
+                            <br/>
+                            <label>Country of Residence:</label>
+                            {{ member_info.residence_country }}
+
+                            <br/>
+                            <label>City of Residence:</label>
+                            {{ member_info.residence_city }}
+
+                            <br/>
+                            <label>Postal Address:</label>
+                            {{ member_info.postal }}
+
+                            <br/>
+                            <label>Residential Address:</label>
+                            {{ member_info.residential }}
+
+                            <br/>
+                            <label>Interests / Hobbies:</label>
+                            {{ member_info.interests }}
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Educational Information</h3>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th>Programme</th>
+                                            <th>Qualification</th>
+                                            <th>Institution</th>
+                                            <th>House</th>
+                                            <th>Year</th>
+                                            <th>Month</th>
+                                            <th>Day</th>
+                                            <th>Present</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for education in member_education %}
+                                            <tr>
+                                                <td>
+                                                    {{ education.programme }}
+                                                </td>
+                                                <td>
+                                                    {{ education.qualification }}
+                                                </td>
+                                                <td>
+                                                    {{ education.institution }}
+                                                </td>
+                                                <td>
+                                                    {{ education.house }}
+                                                </td>
+                                                <td>
+                                                    {{ education.year }}
+                                                </td>
+                                                <td>
+                                                    {{ education.month }}
+                                                </td>
+                                                <td>
+                                                    {{ education.day }}
+                                                </td>
+                                                <td>
+                                                    {% if education.present %}
+                                                        <span><i class="fa fa-check" style="color: green; font-size: 18px"></i></span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {% comment %}<div class="box-header with-border">
+                                <h3 class="box-title">Employment Information</h3>
+                            </div>{% endcomment %}
+                            <h3>Employment Information</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th>Company</th>
+                                            <th>Position</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Description</th>
+                                            <th>Present</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for employment in member_employments %}
+                                            <tr>
+                                                <td>
+                                                    {{ employment.company }}
+                                                </td>
+                                                <td>
+                                                    {{ employment.position }}
+                                                </td>
+                                                <td>
+                                                    {{ employment.employment_date }}
+                                                </td>
+                                                <td>
+                                                    {{ employment.resignation_date }}
+                                                </td>
+                                                <td>
+                                                    {{ employment.description }}
+                                                </td>
+                                                <td>
+                                                    {% if employment.present %}
+                                                        <span><i class="fa fa-check" style="color: green; font-size: 18px"></i></span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {% comment %}<div class="box-header with-border">
+                                <h3 class="box-title">Family Information</h3>
+                            </div>{% endcomment %}
+                            <h3>Family Information</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Category</th>
+                                            <th>Occupation</th>
+                                            <th>Gender</th>
+                                            <th>Deceased</th>
+                                            <th>Retired</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for family_member in family_members %}
+                                            <tr>
+                                                <td>
+                                                    {{ family_member.name }}
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                    {{ family_member.email }}
+                                                </td>
+                                                <td>
+                                                    {{ family_member.category }}
+                                                </td>
+                                                <td>
+                                                    {{ family_member.occupation }}
+                                                </td>
+                                                <td>
+                                                    {{ family_member.gender }}
+                                                </td>
+                                                <td>
+                                                    {% if family_member.deceased %}
+                                                        <span><i class="fa fa-check" style="color: green; font-size: 18px"></i></span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if family_member.deceased %}
+                                                        <span><i class="fa fa-check" style="color: green; font-size: 18px"></i></span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            {% comment %}Training Leaders, Transforming Generations, Representing Divinity!!!{% endcomment %}
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="http://smartempiregh.com">Smart Empire</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}

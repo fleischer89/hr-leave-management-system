@@ -1,0 +1,364 @@
+            {% load website_extras %}
+            <div id="report_panel" style="padding: 10px" class="hide">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        Chart Selection Criteria
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select id="js-chart-record" class="form-control chosen">
+                                        <option value="#">Please Select a Record</option>
+                                        <option value="accounting">Accounting Records</option>
+                                        <option value="sales">Sale Records</option>
+                                        <option value="calls">Call Records</option>
+                                        <option value="marketing_expense">Marketing Expenses</option>
+                                        <option value="production_expense">Production Expenses</option>
+                                        <option value="order">Orders</option>
+                                        <option value="enquiry">Online Enquiries</option>
+                                        <option value="invoice">Invoices</option>
+                                        <option value="banking">Banking Records</option>
+                                        <option value="pricing">Product Pricing</option>
+                                        <option value="dispatch">Warehouse Dispatch</option>
+                                        <option value="receiving">Warehouse Receiving</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <!-- Date and time range -->
+                                <div class="form-group">
+                                    {# <label>Date range button:</label> #}
+                                    <input id="js-chart-date-range" type="hidden"/>
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                                            <i class="fa fa-calendar"></i> Date range picker
+                                            <i class="fa fa-caret-down"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.form group -->
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select id="js-chart-frequency" class="form-control chosen">
+                                        <option value="#">Please Select Chart Frequency</option>
+                                        <option value="amount">Amount</option>
+                                        <option value="count">Number</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select id="js-chart-type" class="form-control chosen">
+                                        <option value="#">Please Select Chart Type</option>
+                                        <option value="area">Area Chart</option>
+                                        <option value="line">Line Chart</option>
+                                        <option value="bar">Bar Chart</option>
+                                        <option value="pie">Pie Chart</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select id="js-chart-employee" class="form-control chosen">
+                                        <option value="#">Please Select an Employee</option>
+                                        {% if employees %}
+                                        {% for employee in employees %}
+                                            <option value="{{ employee.id }}">{{ employee.user | full_name }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select id="js-chart-record" class="form-control chosen">
+                                        <option value="#">Please Select a Product</option>
+                                        {% if products %}
+                                        {% for product in products %}
+                                            <option value="{{ product.id }}">{{ product.label }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group hide">
+                                    <select id="js-chart-trans-type" class="form-control chosen">
+                                        <option value="#">Select a Transaction Type</option>
+                                        <option value="1">Withdrawals</option>
+                                        <option value="2">Deposits</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group hide">
+                                    <select id="js-chart-trans-mode" class="form-control chosen">
+                                        <option value="#">Select a Transaction Mode</option>
+                                        <option value="1">Cash</option>
+                                        <option value="2">Cheque</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <button id="js-generate-chart" type="button" class="btn bg-olive btn-flat margin">
+                                Generate Chart
+                            </button>
+                            &nbsp;&nbsp;
+                            {# <button type="button" class="btn bg-maroon btn-flat margin">Clear Criteria</button> #}
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    function generateChartFrequencyOptions() {
+                        var label = $("#js-chart-record").val();
+                        var data = {record: label};
+                        if (label === "banking") {
+                            $("#js-chart-trans-mode").parent().removeClass("hide");
+                            $("#js-chart-trans-type").parent().removeClass("hide");
+                        } else {
+                            $("#js-chart-trans-mode").parent().addClass("hide");
+                            $("#js-chart-trans-type").parent().addClass("hide");
+                        }
+                        var option_values = [];
+                        Panel.plugin.doAjax("/v1/chart/frequency/options.json", data, "GET")
+                                .success(function (response) {
+                                    option_values = response.data;
+                                    var options = '<option value="#">Please Select Chart Frequency</option>';
+                                    $.map(option_values, function(values) {
+                                        $.map(values, function(k, v) {
+                                            options += '<option value="' + v + '">' + k + '</option>';
+                                        });
+                                    });
+                                    $("#js-chart-frequency").html(options);
+                            });
+                    }
+
+                    function getDateRange() {
+                        var dates = {};
+                        var date_range = $("#js-chart-date-range").val();
+                        var date_map = date_range.split(" - ");
+                        dates['start'] = date_map[0];
+                        dates['end'] = date_map[1];
+                        return dates;
+                    }
+
+                    function getChartData() {
+                        var dates = getDateRange();
+                        var optional = $("#js-chart-x-axis-option").val();
+                        var record = $("#js-chart-record").val();
+                        var flag = $("#js-chart-frequency").val();
+                        var chart = $("#js-chart-type").val();
+
+                        var data = {start: dates['start'], end: dates['end'], record: record, flag: flag, chart: chart,
+                            optional: optional};
+                        if (record === "banking") {
+                            var mode = $("#js-chart-trans-mode");
+                            var type = $("#js-chart-trans-type");
+                            mode.parent().removeClass("hide");
+                            type.parent().removeClass("hide");
+                            data['trans_type'] = type.val();
+                            data['trans_mode'] = mode.val();
+                        }
+                        console.log(data);
+                        Panel.plugin.doAjax("/v1/chart.json", data, "GET")
+                                .success(function (response) {
+                                    console.log(response);
+                                    console.log(response.data);
+                                    Panel.plugin.getChart(response.data, record, null);
+                                });
+                    }
+
+                    $(function () {
+                        $('#daterange-btn').daterangepicker({
+                                ranges: {
+                                    'Today': [moment(), moment()],
+                                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                                },
+                                startDate: moment().subtract(29, 'days'),
+                                endDate: moment()
+                            },
+                            function (start, end) {
+                                var report = $('#reportrange').find("span");
+                                report.html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                                $("#js-chart-date-range").val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+                                console.log(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+                            }
+                        );
+                    });
+
+                    $("#js-generate-chart").on('click', getChartData);
+                    $("#js-chart-record").on('change', generateChartFrequencyOptions);
+                </script>
+
+                {# REPORT SUMMARY #}
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12 hide">
+                        <div id="js-summary-1" class="info-box">
+                            <span class="info-box-icon bg-aqua"><i class="ion ion-cash"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Sales Amount</span>
+                                <span class="info-box-number">90000</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-12 hide">
+                        <div id="js-summary-2" class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa fa-calculator"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Likes</span>
+                                <span class="info-box-number">41,410</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+
+                    <!-- fix for small devices only -->
+                    <div class="clearfix visible-sm-block"></div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-12 hide">
+                        <div id="js-summary-3" class="info-box">
+                            <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Sales</span>
+                                <span class="info-box-number">760</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-12 hide">
+                        <div id="js-summary-4" class="info-box">
+                            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-gear-outline"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">New Members</span>
+                                <span class="info-box-number">2,000</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                </div>
+
+                {# TOP VA;UE PANEL #}
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6 hide">
+                        <div id="top-employee-1" class="description-block border-right">
+                            {# <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span> #}
+                            <h5 class="description-header">$35,210.43</h5>
+                            <span class="description-text">TOTAL REVENUE</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-sm-3 col-xs-6 hide">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+                            <h5 class="description-header">$10,390.90</h5>
+                            <span class="description-text">TOTAL COST</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-sm-3 col-xs-6 hide">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
+                            <h5 class="description-header">$24,813.53</h5>
+                            <span class="description-text">TOTAL PROFIT</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-sm-3 col-xs-6 hide">
+                        <div class="description-block">
+                            <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                            <h5 class="description-header">1200</h5>
+                            <span class="description-text">GOAL COMPLETIONS</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-success">
+                            <div id="revenue-chart" style="position: relative;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %}<div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-success hide">
+                            <div id="revenue-chart" style="position: relative; height: 300px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="box box-success hide">
+                            <div id="line-chart" style="position: relative; height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-success hide">
+                            <div id="bar-chart" style="position: relative; height: 300px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="box box-success hide">
+                            <div id="sales-chart" style="position: relative; height: 300px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="nav-tabs-custom">
+                        <!-- Tabs within a box -->
+                        <ul class="nav nav-tabs pull-right">
+                            <li class="active"><a href="#receiving-revenue-chart1" data-toggle="tab">Area</a></li>
+                            <li><a href="#receiving-line-chart1" data-toggle="tab">Line</a></li>
+                            <li><a href="#receiving-sales-chart1" data-toggle="tab">Donut</a></li>
+                            <li><a href="#receiving-bar-chart1" data-toggle="tab">Bar</a></li>
+                            <li class="pull-left header"><i class="fa fa-inbox"></i>Warehouse Receiving Records</li>
+                        </ul>
+                        <div class="tab-content no-padding">
+                            <!-- Morris chart - Sales -->
+                            <div class="chart tab-pane active" id="receiving-revenue-chart" style="position: relative; height: 300px;"></div>
+                            <div class="chart tab-pane active" id="receiving-line-chart" style="position: relative; height: 300px;"></div>
+                            <div class="chart tab-pane active" id="receiving-sales-chart" style="position: relative; height: 300px;"></div>
+                            <div class="chart tab-pane active" id="receiving-bar-chart" style="position: relative; height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+
+

@@ -1,0 +1,64 @@
+            <div id="enquiries_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if enquiries %}
+                                    <h3>{{ enquiries.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Online Enquiries</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="box box-info">
+                        <div class="box-header">
+                            <h3 class="box-title">Online Enquiries</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="enquiries-list" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Enquirer</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Message</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for enquiry in enquiries %}
+                                        <tr>
+                                            <td>{{ enquiry.id }}</td>
+                                            <td>{{ enquiry.date }}</td>
+                                            <td>{{ enquiry.name }}</td>
+                                            <td>{{ enquiry.phone }}</td>
+                                            <td>{{ enquiry.email }}</td>
+                                            <td>{{ enquiry.message }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Enquirer</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Message</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

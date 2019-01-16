@@ -1,0 +1,184 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    {% load website_extras %}
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Request for Holiday<small class="hide">Optional description</small></h1>
+            <ol class="breadcrumb hide">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if leave_requests %}
+                                    <h3>{{ leave_requests.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>leave requests</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-user"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if employee_leave %}
+                                    <h3>{{ employee_leave.no_of_days_allowed }}</h3>
+                                {% else %}
+                                    <h3>-</h3>
+                                {% endif %}
+                                <p>No. of days allowed</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-user"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if employee_leave %}
+                                    <h3>{{ employee_leave.no_of_days_taken }}</h3>
+                                {% else %}
+                                    <h3>-</h3>
+                                {% endif %}
+                                <p>No. of days taken</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-user"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if employee_leave %}
+                                    <h3>{{ employee_leave.no_of_days_left }}</h3>
+                                {% else %}
+                                    <h3>-</h3>
+                                {% endif %}
+                                <p>No. of days left</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-user"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-info">
+                <div class="box-header">
+
+                </div>
+                <div class="box-body">
+                    <form action="/panel/{{ user.id }}/leave_request/new/" method="post" id="js-add-new-leave-request">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group has-feedback">
+                                    <label>
+                                        <select name="leave_type_id" class="form-control">
+                                            <option value="0">Select Leave Type</option>
+                                            {% for leave_type in leave_types %}
+                                                <option value="{{ leave_type.id }}">{{ leave_type }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    {% if show_approvals %}
+                                        <label>
+                                            <select name="employee_id" class="form-control">
+                                                <option value="0">Select Employee</option>
+                                                {% for emp in employees %}
+                                                    <option value="{{ emp.id }}">{{ emp }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </label>
+                                    {% else %}
+                                        <input name="employee_id" type="hidden" value="{{ employee.id }}" />
+                                    {% endif %}
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s datepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="start_date" data-date-format="yyyy-mm-dd" placeholder="Start Date">
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s datepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="end_date" data-date-format="yyyy-mm-dd" placeholder="End Date">
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="no_days" type="text" class="form-control" placeholder="No of Days">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="reliever" type="text" class="form-control" placeholder="Reliever">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12">
+                                <br/>
+                                <button name="submit_leave_request" type="submit" class="btn btn-success"
+                                        data-dismiss="modal">
+                                    Submit Leave Request
+                                </button>
+                                &nbsp;
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            {% comment %}Training Leaders, Transforming Generations, Representing Divinity!!!{% endcomment %}
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="http://smartempiregh.com">Smart Empire</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}

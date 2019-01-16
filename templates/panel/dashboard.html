@@ -1,0 +1,289 @@
+            {% load website_extras %}
+            <div id="dashboard_panel" style="padding: 10px">
+                <div class="row hide">
+                    <div class="col-lg-2 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if offerings %}
+                                    <h3>{{ offerings | total_sales_amount | money_format }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total Offerings</p>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if sales %}
+                                    <h3>{{ sales | total_sales_amount }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total Testament Sales</p>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if tithes %}
+                                    <h3>{{ tithes | total_sales_amount }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total Tithes</p>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if contributions %}
+                                    <h3>{{ contributions | total_sales_amount }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total Contributions</p>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if dues %}
+                                    <h3>{{ dues | total_sales_amount }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total from Dues</p>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if pledges %}
+                                    <h3>{{ pledges | total_sales_amount }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total from Pledges</p>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- Calendar -->
+                        {% comment %}<div class=" box box-solid bg-green-gradient">
+                            <div class="box-header">
+                                <i class="fa fa-calendar"></i>
+
+                                <h3 class="box-title">Calendar</h3>
+                                <!-- tools box -->
+                                <div class="pull-right box-tools">
+                                    <!-- button with a dropdown -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-bars"></i></button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li><a href="#">Add new event</a></li>
+                                            <li><a href="#">Clear events</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">View calendar</a></li>
+                                        </ul>
+                                    </div>
+                                    <button type="button" class="btn btn-success btn-sm" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-success btn-sm" data-widget="remove">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                                <!-- /. tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body no-padding">
+                                <!--The calendar -->
+                                <div id="calendar" style="width: 100%"></div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer text-black">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- Progress bars -->
+                                        <div class="clearfix">
+                                            <span class="pull-left">Task #1</span>
+                                            <small class="pull-right">90%</small>
+                                        </div>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
+                                        </div>
+
+                                        <div class="clearfix">
+                                            <span class="pull-left">Task #2</span>
+                                            <small class="pull-right">70%</small>
+                                        </div>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-6">
+                                        <div class="clearfix">
+                                            <span class="pull-left">Task #3</span>
+                                            <small class="pull-right">60%</small>
+                                        </div>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
+                                        </div>
+
+                                        <div class="clearfix">
+                                            <span class="pull-left">Task #4</span>
+                                            <small class="pull-right">40%</small>
+                                        </div>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                        </div>{% endcomment %}
+                        <!-- /.box -->
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    Date.prototype.addDays = function (n) {
+                        var time = this.getTime();
+                        var changedDate = new Date(time + (n * 24 * 60 * 60 * 1000));
+                        this.setTime(changedDate.getTime());
+                        return this;
+                    };
+                    function formatDate(date) {
+                        var d = new Date(date),
+                            month = '' + (d.getMonth() + 1),
+                            day = '' + d.getDate(),
+                            year = d.getFullYear();
+
+                        if (month.length < 2) month = '0' + month;
+                        if (day.length < 2) day = '0' + day;
+
+                        return [year, month, day].join('-');
+                    }
+                    function getChartData() {
+                        // var dates = {start: "2018-01-01", end: "2018-04-28"};
+                        var dates = {start: formatDate((new Date()).addDays(-60)), end: formatDate(new Date())};
+                        var optional = "Test";
+                        var record = "offerings";
+                        var flag = "amount";
+                        var chart = "area";
+
+                        var data = {start: dates['start'], end: dates['end'], record: record, flag: flag, chart: chart,
+                            optional: optional};
+                        console.log(data);
+                        Panel.plugin.doAjax("/v1/chart.json", data, "GET")
+                                .success(function (response) {
+                                    console.log(response);
+                                    console.log(response.data);
+                                    Panel.plugin.getChart(response.data, record, record);
+                                });
+                    }
+                    getChartData();
+                </script>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="hide">
+                            <div id="offerings-chart" style="position: relative;"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 hide">
+                        <div class="box box-success">
+                            <div class="info-box bg-green">
+                                <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Members</span>
+                                    <span class="info-box-number">{{ members.count }}</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        {# 50% Increase in 30 Days #}
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+
+                        <div class="box box-warning">
+                            <div class="info-box bg-yellow">
+                                <span class="info-box-icon"><i class="ion ion-ios-chatbubble-outline"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Departments</span>
+                                    <span class="info-box-number">{{ departments.count }}</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 70%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        {# 50% Increase in 30 Days #}
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+
+                        <div class="box box-info">
+                            <div class="info-box bg-aqua">
+                                <span class="info-box-icon"><i class="ion ion-cash"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Ministries</span>
+                                    <span class="info-box-number">{{ ministries.count }}</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 30%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        {# 50% Increase in 30 Days #}
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+
+                        <div class="box box-danger">
+                            <div class="info-box bg-red">
+                                <span class="info-box-icon"><i class="ion ion-wrench"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Assets</span>
+                                    <span class="info-box-number">{{ assets.count }}</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        {# 50% Increase in 30 Days #}
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+

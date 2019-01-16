@@ -1,0 +1,95 @@
+            {% load website_extras %}
+            <div id="attendance_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if attendances %}
+                                    <h3>{{ attendances.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>recorded attendances</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/attendance/new/" class="btn btn-info btn-sm">
+                        Enter New Attendance <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Recorded Attendance</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="attendance-list" class="display table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Event</th>
+                                        <th>Label</th>
+                                        <th>Date</th>
+                                        <th>Men</th>
+                                        <th>Women</th>
+                                        <th>Children</th>
+                                        <th>Guests</th>
+                                        <th>Invited Guests</th>
+                                        <th>Family Online</th>
+                                        <th>Members</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for attendance in attendances %}
+                                        <tr id="{{ attendance.id }}">
+                                            <td>{{ attendance.id }}</td>
+                                            <td>{{ attendance.event }}</td>
+                                            <td>{{ attendance.label }}</td>
+                                            <td>{{ attendance.date }}</td>
+                                            <td class="text-center">{{ attendance.men | normalize_number }}</td>
+                                            <td class="text-center">{{ attendance.women | normalize_number }}</td>
+                                            <td class="text-center">{{ attendance.children | normalize_number }}</td>
+                                            <td class="text-center">{{ attendance.guests | normalize_number }}</td>
+                                            <td class="text-center">{{ attendance.invited_guests | normalize_number }}</td>
+                                            <td class="text-center">{{ attendance.family_online | normalize_number }}</td>
+                                            <td class="text-center">{{ attendance.members | normalize_number }}</td>
+                                            <td class="text-center">{{ attendance.total | normalize_number }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Event</th>
+                                        <th>Label</th>
+                                        <th>Date</th>
+                                        <th>Men</th>
+                                        <th>Women</th>
+                                        <th>Children</th>
+                                        <th>Guests</th>
+                                        <th>Invited Guests</th>
+                                        <th>Family Online</th>
+                                        <th>Members</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+

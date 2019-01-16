@@ -1,0 +1,79 @@
+            {% load website_extras %}
+            <div id="contributions_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if contributions %}
+                                    <h3>{{ contributions.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>contributions</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/contributions/new/" class="btn btn-info btn-sm">
+                        Enter New Contribution <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Contributions</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="contributions-list" class="display table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Member</th>
+                                        <th>Custodian</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for contribution in contributions %}
+                                        <tr id="{{ contribution.id }}">
+                                            <td>{{ contribution.id }}</td>
+                                            <td>{{ contribution.date }}</td>
+                                            <td>{{ contribution.type }}</td>
+                                            <td>{{ contribution.currency.symbol }}</td>
+                                            <td>{{ contribution.amount | money_format }}</td>
+                                            <td>{{ contribution.member.user.spiritual_name }}</td>
+                                            <td>{{ contribution.custodian }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Member</th>
+                                        <th>Custodian</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+

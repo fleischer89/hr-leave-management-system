@@ -1,0 +1,79 @@
+            {% load website_extras %}
+            <div id="maintenance_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if maintenance %}
+                                    <h3>{{ maintenance.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>maintenance records</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/maintenance/new/" class="btn btn-info btn-sm">
+                        Enter New Maintenance Record <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Maintenance Records</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="maintenance-list" class="display table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Asset Name</th>
+                                        <th>Date</th>
+                                        <th>Currency</th>
+                                        <th>Cost</th>
+                                        <th>Custodian</th>
+                                        <th>Service Provider</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for maintain in maintenance %}
+                                        <tr id="{{ maintain.id }}">
+                                            <td>{{ maintain.id }}</td>
+                                            <td>{{ maintain.asset.name }}</td>
+                                            <td>{{ maintain.date }}</td>
+                                            <td>{{ maintain.currency.symbol }}</td>
+                                            <td>{{ maintain.cost }}</td>
+                                            <td>{{ maintain.custodian.user | full_name }}</td>
+                                            <td>{{ maintain.service_provider }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Asset Name</th>
+                                        <th>Date</th>
+                                        <th>Currency</th>
+                                        <th>Cost</th>
+                                        <th>Custodian</th>
+                                        <th>Service Provider</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+

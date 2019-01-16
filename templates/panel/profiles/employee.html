@@ -1,0 +1,494 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    {% load website_extras %}
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Add New Member<small class="hide">Optional description</small></h1>
+            <ol class="breadcrumb hide">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div class="hide" style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if employees %}
+                                    <h3>{{ employees.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Employees</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+            </div>
+
+                <div class="row" style="padding: 20px">
+                    <a href="/panel/{{ user.id }}/employees/" class="btn btn-info btn-sm">
+                        Back to Employees <i class="fa fa-arrow-circle-left"></i>
+                    </a>
+
+                    <a href="/panel/{{ user.id }}/update_employee/{{ employee.id }}" id="js-update-employee-request"
+                       class="btn btn-primary btn-sm">
+                        {% csrf_token %}
+                        Update Employee Record <i class="fa fa-edit"></i>
+                    </a>
+                </div><br/>
+
+            <div class="box box-info">
+                <div class="box-header">
+
+                </div>
+                <div class="box-body" style="font-size: large; line-height: 30px">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12" style="display: block; margin: auto">
+                            {% if employee_photo %}
+                                <img src="/media/{{ employee_photo.document.name }}" class="img-thumbnail"
+                                     alt="User Image" style="width: 150px;">
+                            {% else %}
+                                <img src="/media/photographs/avatar_error.jpg" class="img-circle" alt="User Image">
+                            {% endif %}
+                            <br/>
+                            <div class="table-responsive">
+                                <table class="display table table-vcenter" border="0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Department</td>
+                                            <td>{{ single_employee.department }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>
+                                                {% if employee_profile.title %}
+                                                    <span>{{ employee_profile.title }}</span>
+                                                {% endif %}
+                                                <span>{{ employee_profile.first_name }}</span>
+                                                {% if employee_profile.other_names %}
+                                                    <span>{{ employee_profile.other_names }}</span>
+                                                {% endif %}
+                                                <span>{{ employee_profile.last_name }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>
+                                                {{ employee_profile.phone }}
+                                                {% if employee_info.second_phone %}
+                                                    <br/>{{ employee_info.second_phone }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>
+                                                {{ employee_profile.email }}
+                                                {% if employee_info.second_email %}
+                                                    <br/>{{ employee_info.second_email }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gender</td>
+                                            <td>
+                                                {{ employee_profile.gender }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Marital Status</td>
+                                            <td>
+                                                {{ employee_profile.marital_status }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Emergency Contact Name</td>
+                                            <td>
+                                                {{ emergency_contacts.full_name }}
+                                                {% if emergency_contacts.relationship %}
+                                                    ({{ emergency_contacts.relationship }})
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Emergency Contact Phone</td>
+                                            <td>
+                                                {{ emergency_contacts.phone }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Emergency Contact Email</td>
+                                            <td>
+                                                {{ emergency_contacts.email }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-sm-12 table-responsive">
+                            <table class="display table table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Date of Birth:</td>
+                                        <td>{{ employee_profile.dob }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Place of Birth:</td>
+                                        <td>{{ employee_info.place_of_birth }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nationality:</td>
+                                        <td>{{ employee_info.nationality }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ethnicity:</td>
+                                        <td>{{ employee_info.ethnicity }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hometown:</td>
+                                        <td>{{ employee_info.hometown }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Region:</td>
+                                        <td>{{ employee_info.region }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Languages:</td>
+                                        <td>{{ employee_info.languages }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residence Country:</td>
+                                        <td>{{ employee_info.residence_country }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residence City:</td>
+                                        <td>{{ employee_info.residence_city }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Postal Address:</td>
+                                        <td>{{ employee_info.postal }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residential Address:</td>
+                                        <td>{{ employee_info.residential }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Interest / Hobbies:</td>
+                                        <td>{{ employee_info.interests }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                        <br/>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12" style="font-size: 14px; line-height: 20px">
+                            <h4>Educational Information</h4>
+
+                            <div class="table-responsive">
+                                <table id="employee-education-list" class="table table-bordered table-striped table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th>Programme</th>
+                                            <th>Qualification</th>
+                                            <th>Institution</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Short Course</th>
+                                            <th>Present</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for education in employee_education %}
+                                            <tr>
+                                                <td>
+                                                    {{ education.courses }}
+                                                </td>
+                                                <td>
+                                                    {{ education.qualification }}
+                                                </td>
+                                                <td>
+                                                    {{ education.institution }}
+                                                </td>
+                                                <td>
+                                                    {{ education.start_date }}
+                                                </td>
+                                                <td>
+                                                    {{ education.end_date }}
+                                                </td>
+                                                <td>
+                                                    {% if education.short_course %}
+                                                        <span><i class="fa fa-check" style="color: green; font-size: 18px"></i></span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if education.present %}
+                                                        <span><i class="fa fa-check" style="color: green; font-size: 18px"></i></span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12" style="font-size: 14px; line-height: 20px">
+                            {% comment %}<div class="box-header with-border">
+                                <h3 class="box-title">Family Information</h3>
+                            </div>{% endcomment %}
+                            <h4>Dependants</h4>
+                            <div class="table-responsive">
+                                <table id="emp-dependents-list" class="table table-bordered table-striped table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Photo</th>
+                                            <th>Relationship</th>
+                                            <th>Date of Birth</th>
+                                            <th>Age</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for dependent in dependants %}
+                                            <tr>
+                                                <td>
+                                                    {{ dependent.name }}
+                                                </td>
+                                                <td>
+                                                    {% if dependent.photo %}
+                                                        <img src="/media/{{ dependent.photo | photo }}"
+                                                             class="img-responsive" alt="User Image"
+                                                             height="25px" style="height: 50px">
+                                                    {% else %}
+                                                        <img src="/media/photographs/avatar_error.jpg" class="img-circle" alt="User Image" height="25px">
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if dependent.relationship %}
+                                                        {{ dependent.relationship }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if dependent.date_of_birth %}
+                                                        {{ dependent.date_of_birth }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if dependent.age %}
+                                                        {{ dependent.age }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {{ dependent.gender }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" style="font-size: 14px; line-height: 20px">
+                            {% comment %}<div class="box-header with-border">
+                                <h3 class="box-title">Family Information</h3>
+                            </div>{% endcomment %}
+                            <h4>Provident Fund Beneficiaries</h4>
+                            <div class="table-responsive">
+                                <table id="pf-beneficiaries-list" class="table table-bordered table-striped table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Date of Birth</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Relationship</th>
+                                            <th>Address</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for beneficiary in beneficiaries %}
+                                            <tr>
+                                                <td>
+                                                    {{ beneficiary.full_name }}
+                                                </td>
+                                                <td>
+                                                    {{ beneficiary.date_of_birth }}
+                                                </td>
+                                                <td>
+                                                    {% if beneficiary.phone %}
+                                                        {{ beneficiary.phone }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if beneficiary.email %}
+                                                        {{ beneficiary.email }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if beneficiary.relationship %}
+                                                        {{ beneficiary.relationship }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if beneficiary.address %}
+                                                        {{ beneficiary.address }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {{ beneficiary.percentage }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" style="font-size: 14px; line-height: 20px">
+                            {% comment %}<div class="box-header with-border">
+                                <h3 class="box-title">Family Information</h3>
+                            </div>{% endcomment %}
+                            <h4>References</h4>
+                            <div class="table-responsive">
+                                <table id="employee-references-list" class="table table-bordered table-striped table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Name</th>
+                                            <th>Organization</th>
+                                            <th>Position</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for reference in references %}
+                                            <tr>
+                                                <td>
+                                                    {{ reference.type }}
+                                                </td>
+                                                <td>
+                                                    {{ reference.name }}
+                                                </td>
+                                                <td>
+                                                    {% if reference.organisation %}
+                                                        {{ reference.organisation }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if reference.position %}
+                                                        {{ reference.position }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if reference.phone %}
+                                                        {{ reference.phone }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if reference.email %}
+                                                        {{ reference.email }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if reference.address %}
+                                                        {{ reference.address }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            {% comment %}Training Leaders, Transforming Generations, Representing Divinity!!!{% endcomment %}
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="http://smartempiregh.com">Smart Empire</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}
+

@@ -1,0 +1,648 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    {% load website_extras %}
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Add New Employee<small class="hide">Optional description</small></h1>
+            <ol class="breadcrumb hide">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if employees %}
+                                    <h3>{{ employees.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Employees</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-user"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-info">
+                <div class="box-header">
+
+                </div>
+                <div class="box-body">
+                    <form id="js-add-new-employee" method="post" action="/panel/{{ user.id }}/employees/new/"
+                          enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="form-group has-feedback">
+                                    <input name="employee_photo" type="file" class="form-control"
+                                           placeholder="Photograph">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="employee_title" type="text" class="form-control"
+                                           placeholder="Title">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="first_name" type="text" class="form-control" placeholder="First Name">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="last_name" type="text" class="form-control" placeholder="Last Name">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <textarea name="other_names" class="form-control" placeholder="Other Names"></textarea>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="phone" type="text" class="form-control" placeholder="Phone number">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="second_phone" type="text" class="form-control"
+                                           placeholder="2nd Phone number">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="email" type="text" class="form-control" placeholder="Email">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="second_email" type="text" class="form-control" placeholder="2nd Email">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback form-inline">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="gender" id="gender" value="Male">
+                                            Male
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="gender" id="gender" value="Female">
+                                            Female
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback form-inline">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="marital_status" id="marital_status" value="Single">
+                                            Single
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="marital_status" id="marital_status" value="Married">
+                                            Married
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="marital_status" id="marital_status" value="Divorced">
+                                            Divorced
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="marital_status" id="marital_status" value="Widowed">
+                                            Widowed
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="social_security_no" type="text" class="form-control"
+                                           placeholder="Social Security Number">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="spouse_name" type="text" class="form-control"
+                                           placeholder="Spouse's Name">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="spouse_phone" type="text" class="form-control"
+                                           placeholder="Spouse's Phone Number">
+                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s datepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="dob_date" data-date-format="yyyy-mm-dd" placeholder="Date of Birth">
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <textarea name="place_of_birth" class="form-control" placeholder="Place of Birth"></textarea>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="nationality" type="text" class="form-control" placeholder="Nationality">
+
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="ethnicity" type="text" class="form-control" placeholder="Ethnicity">
+
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="hometown" type="text" class="form-control" placeholder="Hometown">
+
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="languages" type="text" class="form-control" placeholder="Languages">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="region" type="text" class="form-control" placeholder="Region">
+
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="residence_country" type="text" class="form-control"
+                                           placeholder="Country of Residence">
+
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="residence_city" type="text" class="form-control"
+                                           placeholder="City of Residence">
+
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <textarea name="postal" class="form-control" placeholder="Postal Address"></textarea>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <textarea name="residential" class="form-control" placeholder="Residence"></textarea>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <textarea name="interests" class="form-control" placeholder="Interests / Hobbies"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Job Information</h4>
+                                <div class="form-group has-feedback">
+                                    <input name="job_title" type="text" class="form-control"
+                                           placeholder="Job Title">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="job_supervisor" type="text" class="form-control"
+                                           placeholder="Supervisor">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>
+                                        <select name="department_id" class="form-control">
+                                            <option value="0">Please Select Employee's Department</option>
+                                            {% for department in departments %}
+                                                <option value="{{ department.id }}">{{ department.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="work_location" type="text" class="form-control"
+                                           placeholder="Work Location">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="work_email" type="text" class="form-control"
+                                           placeholder="Work Email">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="work_phone" type="text" class="form-control"
+                                           placeholder="Work Phone Number">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s datepicker-input form-control" type="text"
+                                           style="font-size: 14px" name="work_start_date" data-date-format="yyyy-mm-dd"
+                                           placeholder="Start Date">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h4>Dependents Information</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Photograph</th>
+                                            <th>Name</th>
+                                            <th>Relationship</th>
+                                            <th>Date of Birth</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in dependent_count %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'dependent_photo_1' }}"
+                                                               type="file" class="form-control"
+                                                               placeholder="Photograph">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'dependent_name_1' }}" type="text" class="form-control"
+                                                               placeholder="Name">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <label for="{{ i | generate_name:'dependent_relationship_1' }}">
+                                                            <select name="{{ i | generate_name:'dependent_relationship_1' }}"
+                                                                    id="{{ i | generate_name:'dependent_relationship_1' }}"
+                                                                    class="form-control">
+                                                                <option value="Husband">Husband</option>
+                                                                <option value="Wife">Wife</option>
+                                                                <option value="Son">Son</option>
+                                                                <option value="Daughter">Daughter</option>
+                                                                <option value="Father">Father</option>
+                                                                <option value="Mother">Mother</option>
+                                                                <option value="Brother">Brother</option>
+                                                                <option value="Sister">Sister</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input class="input-sm input-s datepicker-input form-control"
+                                                           type="text" style="font-size: 14px"
+                                                           name="{{ i | generate_name:'dependent_dob_1' }}"
+                                                           data-date-format="yyyy-mm-dd"
+                                                           placeholder="Date of Birth">
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Provident Fund Beneficiaries</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Relationship</th>
+                                            <th>Date of Birth</th>
+                                            <th>Telephone</th>
+                                            <th>Email</th>
+                                            <th>Percentage to be given</th>
+                                            <th>Residential Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in beneficiary_count %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'beneficiary_name_1' }}" type="text" class="form-control"
+                                                               placeholder="Full Name">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <label for="{{ i | generate_name:'beneficiary_relationship_1' }}">
+                                                            <select name="{{ i | generate_name:'beneficiary_relationship_1' }}"
+                                                                    id="{{ i | generate_name:'beneficiary_relationship_1' }}"
+                                                                    class="form-control">
+                                                                <option value="Husband">Husband</option>
+                                                                <option value="Wife">Wife</option>
+                                                                <option value="Son">Son</option>
+                                                                <option value="Daughter">Daughter</option>
+                                                                <option value="Father">Father</option>
+                                                                <option value="Mother">Mother</option>
+                                                                <option value="Brother">Brother</option>
+                                                                <option value="Sister">Sister</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                    {% comment %}<div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'beneficiary_relationship_1' }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Relationship">
+                                                    </div>{% endcomment %}
+                                                </td>
+                                                <td>
+                                                    <input class="input-sm input-s datepicker-input form-control"
+                                                           type="text" style="font-size: 14px"
+                                                           name="{{ i | generate_name:'beneficiary_dob_1' }}"
+                                                           data-date-format="yyyy-mm-dd"
+                                                           placeholder="Date of Birth">
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'beneficiary_phone_1' }}"
+                                                               type="text" class="form-control" placeholder="Phone Number">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'beneficiary_email_1' }}"
+                                                               type="text" class="form-control" placeholder="Email">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'beneficiary_percentage_1' }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Percentage">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <textarea name="{{ i | generate_name:'beneficiary_address_1' }}"
+                                                               rows="2" cols="5" class="form-control"
+                                                               placeholder="Residential Address"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Next of Kin / Emergency Contact Information</h4>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_name" type="text" class="form-control"
+                                           placeholder="Full Name">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_relationship" type="text" class="form-control"
+                                           placeholder="Relationship">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_phone" type="text" class="form-control"
+                                           placeholder="Phone Number">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_phone_2" type="text" class="form-control"
+                                           placeholder="Second Phone Number">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="emergency_contact_email" type="text" class="form-control"
+                                           placeholder="Emergency Contact Email">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <textarea name="emergency_contact_address" rows="2" class="form-control"
+                                           placeholder="Residential Address"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Leave Entitlement</h4>
+                                <div class="form-group has-feedback">
+                                    <input name="leave_days_allowed" type="text" class="form-control"
+                                           placeholder="Allowed Leave Days">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div><br/>
+
+                                <h4>Bank Details</h4>
+                                <div class="form-group has-feedback">
+                                    <input name="bank_name" type="text" class="form-control"
+                                           placeholder="Bank / Building Society Name">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="bank_branch" type="text" class="form-control"
+                                           placeholder="Branch">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="bank_account_number" type="text" class="form-control"
+                                           placeholder="Account Number">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="bank_account_name" type="text" class="form-control"
+                                           placeholder="Account Name">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Educational Background</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Programme</th>
+                                            <th>Qualification</th>
+                                            <th>Institution</th>
+                                            <th>Date From</th>
+                                            <th>Date To</th>
+                                            <th>Is Short Course?</th>
+                                            <th>Present</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in education_count %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'programme_1' }}" type="text" class="form-control"
+                                                               placeholder="Programme">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'qualification_1' }}" type="text" class="form-control"
+                                                               placeholder="Qualification">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'institution_1' }}" type="text" class="form-control"
+                                                               placeholder="Institution">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input class="input-sm input-s datepicker-input form-control"
+                                                               type="text" style="font-size: 14px"
+                                                               name="{{ i | generate_name:'education_start_date_1' }}"
+                                                               data-date-format="yyyy-mm-dd" placeholder="From">
+                                                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input class="input-sm input-s datepicker-input form-control"
+                                                               type="text" style="font-size: 14px"
+                                                               name="{{ i | generate_name:'education_end_date_1' }}"
+                                                               data-date-format="yyyy-mm-dd" placeholder="To">
+                                                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" name="{{ i | generate_name:'short_course_1' }}"
+                                                                       id="{{ i | generate_name:'short_course_1' }}" value="False">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" name="{{ i | generate_name:'education_present_1' }}"
+                                                                       id="{{ i | generate_name:'education_present_1' }}" value="False">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Employee References</h4>
+
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Reference Type</th>
+                                            <th>Organization</th>
+                                            <th>Position</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in reference_count %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'reference_name_1' }}" type="text" class="form-control"
+                                                               placeholder="Full Name">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <select name="{{ i | generate_name:'reference_type_1' }}"
+                                                                class="form-control">
+                                                            <option value="Professional">Professional</option>
+                                                            <option value="Character">Character</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'reference_organization_1' }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Organization">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'reference_position_1' }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Position">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'reference_phone_1' }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Phone">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <input name="{{ i | generate_name:'reference_email_1' }}"
+                                                               type="text" class="form-control"
+                                                               placeholder="Email">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group has-feedback">
+                                                        <textarea name="{{ i | generate_name:'reference_address_1' }}"
+                                                                  class="form-control" rows="2" rows="2"
+                                                                  placeholder="Address"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12">
+
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+                                <br/>
+                                <button name="add_new_employee" type="submit" class="btn btn-success"
+                                        data-dismiss="modal">
+                                    Add New Employee
+                                </button>
+                                &nbsp;
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            {% comment %}Training Leaders, Transforming Generations, Representing Divinity!!!{% endcomment %}
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="http://smartempiregh.com">Smart Empire</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}

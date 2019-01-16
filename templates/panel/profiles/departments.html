@@ -1,0 +1,183 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    {% load website_extras %}
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Request for Holiday<small class="hide">Optional description</small></h1>
+            <ol class="breadcrumb hide">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div id="departments_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if departments %}
+                                    <h3>{{ departments.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>departments</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/departments/new/" class="btn btn-info btn-sm">
+                        Enter New Department <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+                <br/>
+
+                <div class="row">
+                    {% if department %}
+                        <div class="box">
+                            <div style="margin: 10px">
+                                <a href="/panel/{{ user.id }}/departments/" class="btn btn-info btn-sm">
+                                    Back to Departments <i class="fa fa-arrow-circle-left"></i>
+                                </a>
+
+                                <a href="/panel/{{ user.id }}/update_department/{{ department.id }}"
+                                   id="js-update-department-request" class="btn btn-primary btn-sm">
+                                    {% csrf_token %}
+                                    Update Department <i class="fa fa-edit"></i>
+                                </a>
+                            </div>
+
+                            <div class="box-header">
+                                <h3 class="box-title">Department Name: {{ department.name }}</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="col-lg-6 table-responsive">
+                                    <table class="display table table-vcenter" border="0">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Purpose</td>
+                                                <td>{{ department.purpose }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Supervisors</td>
+                                                <td>{{ department.supervisors }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Description</td>
+                                                <td>{{ department.description }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-6">
+
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">List of Departments</h3>
+                            </div>
+                            <div class="box-body table-responsive">
+                                <table id="departments-list" class="display table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Supervisors</th>
+                                            <th>Purpose</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for department in departments %}
+                                            <tr id="{{ department.id }}">
+                                                <td>{{ department.id }}</td>
+                                                <td>{{ department.name }}</td>
+                                                <td>{{ department.supervisors }}</td>
+                                                <td>{{ department.purpose }}</td>
+                                                <td>
+                                                    <a href="/panel/{{ user.id }}/update_department/{{ employee.id }}"
+                                                          id="js-update-department-request">
+                                                        {% csrf_token %}
+                                                        <button name="update_department" type="submit"
+                                                                class="btn btn-xs btn-primary" value="Update"
+                                                                data-dismiss="modal">
+                                                            Update
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <form action="/panel/{{ user.id }}/delete_department/{{ department.id }}" method="post"
+                                                          id="js-delete-department-request">
+                                                        {% csrf_token %}
+                                                        <button name="delete_department" type="submit"
+                                                                class="btn btn-xs btn-danger" value="Delete"
+                                                                data-dismiss="modal">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Supervisors</th>
+                                            <th>Purpose</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            {% comment %}Training Leaders, Transforming Generations, Representing Divinity!!!{% endcomment %}
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="http://smartempiregh.com">Smart Empire</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+            <div id="employees_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if employees %}
+                                    <h3>{{ employees.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Employees</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Employees</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="employee-list" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Position</th>
+                                        <th>Department</th>
+                                        <th>Registration Date</th>
+                                        <th>Supervisor</th>
+                                        <th>Manager</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for employee in employees %}
+                                        <tr>
+                                            <td>{{ employee.id }}</td>
+                                            <td>{{ employee.user.first_name }}</td>
+                                            <td>{{ employee.user.surname }}</td>
+                                            <td>{{ employee.position.position }}</td>
+                                            <td>{{ employee.position.department.name }}</td>
+                                            <td>{{ employee.registration_date }}</td>
+                                            {% if employee.is_supervisor != False %}
+                                                <td>yes</td>
+                                            {% else %}
+                                                <td>no</td>
+                                            {% endif %}
+                                            {% if employee.is_manager != False %}
+                                                <td>yes</td>
+                                            {% else %}
+                                                <td>no</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Position</th>
+                                        <th>Department</th>
+                                        <th>Registration Date</th>
+                                        <th>Supervisor</th>
+                                        <th>Manager</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

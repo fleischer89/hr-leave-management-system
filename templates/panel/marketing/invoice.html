@@ -1,0 +1,107 @@
+            {% load website_extras %}
+            <div id="marketing_invoice_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if invoices %}
+                                    <h3>{{ invoices.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Invoices</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/marketing/invoice/new/" class="btn btn-info btn-sm">
+                        Enter New Invoice <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                {% comment %}<div class="row">
+                    <div class="nav-tabs-custom">
+                        <!-- Tabs within a box -->
+                        <ul class="nav nav-tabs pull-right">
+                            <li class="active"><a href="#invoices-revenue-chart" data-toggle="tab">Area</a></li>
+                            <li><a href="#invoices-line-chart" data-toggle="tab">Line</a></li>
+                            <li><a href="#invoices-sales-chart" data-toggle="tab">Donut</a></li>
+                            <li><a href="#invoices-bar-chart" data-toggle="tab">Bar</a></li>
+                            <li class="pull-left header"><i class="fa fa-inbox"></i>Call Records</li>
+                        </ul>
+                        <div class="tab-content no-padding">
+                            <!-- Morris chart - Sales -->
+                            <div class="chart tab-pane active" id="invoices-revenue-chart" style="position: relative; height: 300px;"></div>
+                            <div class="chart tab-pane" id="invoices-line-chart" style="position: relative; height: 300px;"></div>
+                            <div class="chart tab-pane" id="invoices-sales-chart" style="position: relative; height: 300px;"></div>
+                            <div class="chart tab-pane" id="invoices-bar-chart" style="position: relative; height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>{% endcomment %}
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of nvoicesI</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="marketing-invoice-list" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        {# <th>Invoice #</th> #}
+                                        <th>Date</th>
+                                        <th>Customer</th>
+                                        <th>Product</th>
+                                        <th>Qty.</th>
+                                        <th></th>
+                                        <th>Unit Price</th>
+                                        <th>Total Price</th>
+                                        <th>Discount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for invoice in invoices %}
+                                        <tr id="{{ invoice.number }}">
+                                            <td>{{ invoice.id }}</td>
+                                            {# <td>{{ invoice.number }}</td> #}
+                                            <td>{{ invoice.date }}</td>
+                                            <td>{{ invoice.customer.name }}</td>
+                                            <td>{{ invoice.product.name }}</td>
+                                            <td>{{ invoice.quantity }}</td>
+                                            <td>{{ invoice.currency.symbol }}</td>
+                                            <td>{{ invoice.unit_price|money_format }}</td>
+                                            <td>{{ invoice.unit_price|multiply:invoice.quantity|money_format }}</td>
+                                            <td>{{ invoice.discount }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        {# <th>Invoice #</th> #}
+                                        <th>Date</th>
+                                        <th>Customer</th>
+                                        <th>Product</th>
+                                        <th>Qty.</th>
+                                        <th></th>
+                                        <th>Unit Price</th>
+                                        <th>Total Price</th>
+                                        <th>Discount</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

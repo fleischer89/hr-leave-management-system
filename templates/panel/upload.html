@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DV Unlimited</title>
+</head>
+<body>
+    {% comment %}List of Uploaded files{% endcomment %}
+    {% if documents %}
+        <ul>
+        {% for document in documents %}
+            <li>
+                <a href="{{ document.document.url }}">
+                    {{ document.document.name }}
+                    <img src="{{ document.document.url }}" alt="{{ document.document.name }}">
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No documents.</p>
+    {% endif %}
+    <form action="/panel/list/" method="post" enctype="multipart/form-data">
+        <p>Errors: {{ form.non_field_errors }}</p>
+        <p>Label: {{ form.photo.label_tag }}</p>
+        <p>
+            Errors: {{ form.photo.errors }}
+            Title: {{ form.title }}
+            Photo: {{ form.photo }}
+        </p>
+        <p><input type="submit" value="Upload" /></p>
+    </form>
+</body>
+</html>

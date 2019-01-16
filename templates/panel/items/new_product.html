@@ -1,0 +1,127 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Page Header<small>Optional description</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if products %}
+                                    <h3>{{ products.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Products</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-info">
+                <div class="box-header">
+
+                </div>
+                <div class="box-body">
+                    <form id="js-add-new-product" method="post" action="/panel/{{ user.id }}/products/new/">
+                        {{ csrf_token }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <input name="product_name" type="text" class="form-control" placeholder="Product Name">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="product_type" type="text" class="form-control" placeholder="Product Type">
+                                    <span class="glyphicon glyphicon-tag form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="product_quantity" type="text" class="form-control" placeholder="Product Quantity">
+                                    <span class="glyphicon glyphicon-plus form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="product_variation" type="text" class="form-control"
+                                           placeholder="Product Variation - Example: Banana, Strawberry, Lemon, etc.">
+                                    <span class="glyphicon glyphicon-tree-deciduous form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="product_image" type="file" class="form-control"
+                                           placeholder="Product Image">
+                                    <span class="glyphicon glyphicon-open form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="product_label" type="text" class="form-control"
+                                           placeholder="Product Label">
+                                    <span class="glyphicon glyphicon-tag form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>Notes</label>
+                                    <textarea name="product_notes" class="form-control" placeholder="Notes">
+                                    </textarea>
+                                </div>
+
+                                <button name="add_new_product" type="submit" class="btn btn-success" data-dismiss="modal">
+                                    Add New Product
+                                </button>
+                                &nbsp;
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                            {% comment %}<div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s datepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="call_date" data-date-format="yyyy-mm-dd" placeholder="Call Date">
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s ui-timepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="call_time" placeholder="Call time">
+                                    {# <i class="fa fa-clock-o"></i> #}
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="call_duration" type="text" class="form-control"
+                                           placeholder="Call Duration. Example: 20 minutes">
+                                <span class="glyphicon glyphicon-time form-control-feedback"></span>
+                                </div>
+                            </div>{% endcomment %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    {% include "panel/includes/mini_footer.html" %}
+
+{% endblock %}

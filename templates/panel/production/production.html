@@ -1,0 +1,92 @@
+            {% load website_extras %}
+            <div id="production_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if production %}
+                                    <h3>{{ production.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Productions</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/production/new/" class="btn btn-info btn-sm">
+                        Enter New Production <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Productions</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="production-list" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">#</th>
+                                        <th rowspan="2">Date</th>
+                                        <th rowspan="2">Batch #</th>
+                                        <th rowspan="2">Employee</th>
+                                        <th rowspan="2">Work Done</th>
+                                        <th rowspan="2">Product</th>
+                                        <th rowspan="2">Quantity</th>
+                                        <th colspan="2">Time</th>
+                                        <th colspan="3">Bottles</th>
+                                        <th colspan="3">Labels</th>
+                                        <th rowspan="2">Custodian</th>
+                                        <th rowspan="2">Notes</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Issued</th>
+                                        <th>Rejected</th>
+                                        <th>Returned</th>
+                                        <th>Issued</th>
+                                        <th>Rejected</th>
+                                        <th>Returned</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for prod in production %}
+                                        <tr>
+                                            <td>{{ prod.id }}</td>
+                                            <td>{{ prod.date }}</td>
+                                            <td>{{ prod.batch_number }}</td>
+                                            <td>{{ prod.employee.user | full_name }}</td>
+                                            <td>{{ prod.work_done }}</td>
+                                            <td>{{ prod.product.name }}</td>
+                                            <td>{{ prod.quantity }}</td>
+                                            <td>{{ prod.start_time }}</td>
+                                            <td>{{ prod.end_time }}</td>
+                                            <td>{{ prod.bottles_issued }}</td>
+                                            <td>{{ prod.bottles_rejected }}</td>
+                                            <td>{{ prod.bottles_returned }}</td>
+                                            <td>{{ prod.labels_issued }}</td>
+                                            <td>{{ prod.labels_rejected }}</td>
+                                            <td>{{ prod.labels_returned }}</td>
+                                            <td>{{ prod.custodian | full_name }}</td>
+                                            <td>{{ prod.notes }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

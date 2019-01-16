@@ -1,0 +1,78 @@
+            {% load website_extras %}
+            <div id="commitments_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if commitments %}
+                                    <h3>{{ commitments.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>commitments</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/commitments/new/" class="btn btn-info btn-sm">
+                        Enter New Commitment <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of commitments</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="commitments-list" class="display table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Member</th>
+                                        <th>Custodian</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for commitment in commitments %}
+                                        <tr id="{{ commitment.id }}">
+                                            <td>{{ commitment.id }}</td>
+                                            <td>{{ commitment.date }}</td>
+                                            <td>{{ commitment.type }}</td>
+                                            <td>{{ commitment.currency.symbol }}</td>
+                                            <td>{{ commitment.amount | money_format }}</td>
+                                            <td>{{ commitment.member.user.spiritual_name }}</td>
+                                            <td>{{ commitment.custodian }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Member</th>
+                                        <th>Custodian</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

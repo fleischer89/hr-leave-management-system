@@ -1,0 +1,86 @@
+            <div id="customers_list_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if customers %}
+                                    <h3>{{ customers.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Customers</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Customers</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="customer-list" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Customer #</th>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
+                                        <th>Location</th>
+                                        <th>Is Person?</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for customer in customers %}
+                                        <tr>
+                                            <td>{{ customer.id }}</td>
+                                            <td>{{ customer.customer_id }}</td>
+                                            <td>{{ customer.name }}</td>
+                                            {% if customer.company %}
+                                                <td>{{ customer.company.name }}</td>
+                                            {% else %}
+                                                <td></td>
+                                            {% endif %}
+                                            <td>{{ customer.phone_number }}</td>
+                                            <td>{{ customer.email }}</td>
+                                            <td>{{ customer.address }}</td>
+                                            <td>{{ customer.location }}</td>
+                                            {% if customer.is_person != False %}
+                                                <td>yes</td>
+                                            {% else %}
+                                                <td>no</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Customer #</th>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
+                                        <th>Location</th>
+                                        <th>Is Person?</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

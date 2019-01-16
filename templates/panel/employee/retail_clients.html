@@ -1,0 +1,81 @@
+            <div id="customers_retail_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if retail_clients %}
+                                    <h3>{{ retail_clients.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Retail Clients</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Retail Clients</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="customer-retail" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Location</th>
+                                        <th>Facebook Contact</th>
+                                        <th>Company</th>
+                                        <th>Product</th>
+                                        <th>Employee</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for retail in retail_clients %}
+                                        <tr>
+                                            <td>{{ retail.id }}</td>
+                                            <td>{{ retail.first_name }}</td>
+                                            <td>{{ retail.last_name }}</td>
+                                            <td>{{ retail.phone_number }}</td>
+                                            <td>{{ retail.email }}</td>
+                                            <td>{{ retail.location }}</td>
+                                            <td>{{ retail.facebook_contact }}</td>
+                                            {% if retail.company %}
+                                                <td>{{ retail.company.name }}</td>
+                                            {% else %}
+                                                <td></td>
+                                            {% endif %}
+                                            <td>{{ retail.product.name }}</td>
+                                            <td>{{ retail.custodian.user.first_name }} {{ retail.custodian.user.surname }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Location</th>
+                                        <th>Facebook Contact</th>
+                                        <th>Company</th>
+                                        <th>Product</th>
+                                        <th>Employee</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

@@ -1,0 +1,77 @@
+            <div id="employee_position_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if positions %}
+                                    <h3>{{ positions.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Employee Positions</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Employees</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="employee-position-list" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Position</th>
+                                        <th>Department</th>
+                                        <th>Registration Date</th>
+                                        <th>Supervisor</th>
+                                        <th>Manager</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for position in positions %}
+                                        <tr>
+                                            <td>{{ position.id }}</td>
+                                            <td>{{ position.position }}</td>
+                                            <td>{{ position.department.name }}</td>
+                                            <td>{{ position.registration_date }}</td>
+                                            {% if position.is_supervisor != False %}
+                                                <td>yes</td>
+                                            {% else %}
+                                                <td>no</td>
+                                            {% endif %}
+                                            {% if position.is_manager != False %}
+                                                <td>yes</td>
+                                            {% else %}
+                                                <td>no</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Position</th>
+                                        <th>Department</th>
+                                        <th>Registration Date</th>
+                                        <th>Supervisor</th>
+                                        <th>Manager</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

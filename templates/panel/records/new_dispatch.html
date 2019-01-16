@@ -1,0 +1,136 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Page Header<small>Optional description</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if dispatch %}
+                                    <h3>{{ dispatch.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Warehouse Dispatch Records</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-info">
+                <div class="box-header">
+
+                </div>
+                <div class="box-body">
+                    <form id="js-add-new-dispatch" method="post" action="/panel/{{ user.id }}/records/dispatch/new/">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <label>Product Dispatched</label>
+                                    <select class="form-control" name="dispatch_product">
+                                        {% for product in products %}
+                                            <option value="{{ product.id }}">{{ product.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="quantity" type="text" class="form-control" placeholder="Quantity">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="dispatch_receiver" type="text" class="form-control"
+                                           placeholder="Receiver">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="vehicle_number" type="text" class="form-control"
+                                           placeholder="Vehicle Number">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="product_state" type="text" class="form-control"
+                                           placeholder="State of Products">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="batch_number" type="text" class="form-control" placeholder="Batch Number">
+                                    <span class="glyphicon glyphicon-th-list form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback">
+                                    <label>Notes</label>
+                                    <textarea name="dispatch_notes" class="form-control"
+                                              placeholder="Warehouse Dispatch Notes">
+                                    </textarea>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s datepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="manufacture_date" data-date-format="yyyy-mm-dd" placeholder="Manufacturing Date">
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s datepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="expiry_date" data-date-format="yyyy-mm-dd" placeholder="Expiry Date">
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s datepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="dispatch_date" data-date-format="yyyy-mm-dd" placeholder="Dispatch Date">
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input class="input-sm input-s ui-timepicker-input form-control" type="text" style="font-size: 14px"
+                                           name="dispatch_time" placeholder="Dispatch time">
+                                    {# <i class="fa fa-clock-o"></i> #}
+                                </div>
+
+                                <button name="add_new_dispatch" type="submit" class="btn btn-success" data-dismiss="modal">
+                                    Add New Warehouse Dispatch Record
+                                </button>
+                                &nbsp;
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    {% include "panel/includes/mini_footer.html" %}
+
+{% endblock %}

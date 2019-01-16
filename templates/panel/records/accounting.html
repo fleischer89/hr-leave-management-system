@@ -1,0 +1,112 @@
+            <div id="accounting_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if accounting %}
+                                    <h3>{{ accounting.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Accounting</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/records/accounting/new/" class="btn btn-info btn-sm">
+                        Enter New Accounting Record <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                {% comment %}<div class="row">
+                    <div class="nav-tabs-custom">
+                        <!-- Tabs within a box -->
+                        <ul class="nav nav-tabs pull-right">
+                            <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+                            <li><a href="#line-chart" data-toggle="tab">Line</a></li>
+                            <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+                            <li><a href="#bar-chart" data-toggle="tab">Bar</a></li>
+                            <li class="pull-left header"><i class="fa fa-inbox"></i>Accounting Records</li>
+                        </ul>
+                        <div class="tab-content no-padding">
+                            <!-- Morris chart - Sales -->
+                            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+                            <div class="chart tab-pane" id="line-chart" style="position: relative; height: 300px;"></div>
+                            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+                            <div class="chart tab-pane" id="bar-chart" style="position: relative; height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>{% endcomment %}
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Accounting Month Details</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="accounting-list" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">#</th>
+                                        <th rowspan="2">Date</th>
+                                        <th rowspan="2">Month</th>
+                                        <th rowspan="2"></th>
+                                        <th colspan="2" style="text-align: center">Expenses</th>
+                                        <th colspan="2" style="text-align: center">Sales</th>
+                                        <th rowspan="2">Inflow</th>
+                                        <th rowspan="2">Credit Payment</th>
+                                        <th rowspan="2">Total</th>
+                                        <th rowspan="2">Overseer</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Marketing</th>
+                                        <th>Production</th>
+                                        <th>#</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for acct in accounting %}
+                                        <tr>
+                                            <td>{{ acct.id }}</td>
+                                            <td>{{ acct.date }}</td>
+                                            <td>{{ acct.month }}</td>
+                                            {# <td>{{ acct.currency.symbol }}</td> #}
+                                            <td>{{ acct.currency }}</td>
+                                            <td>{{ acct.marketing_expenses }}</td>
+                                            <td>{{ acct.production_expenses }}</td>
+                                            <td>{{ acct.sales_number }}</td>
+                                            <td>{{ acct.sales_amount }}</td>
+                                            <td>{{ acct.cash_inflow }}</td>
+                                            <td>{{ acct.credited_product_payment }}</td>
+                                            <td>{{ acct.total_amount }}</td>
+                                            <td>{{ acct.custodian.user.surname }} {{ acct.custodian.user.first_name }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    {% comment %}<tr>
+                                        <th>#</th>
+                                        <th>Recipient</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Duration</th>
+                                        <th>Purpose</th>
+                                        <th>Caller</th>
+                                    </tr>{% endcomment %}
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

@@ -1,0 +1,81 @@
+            {% load website_extras %}
+            <div id="marketing_expenses_panel" style="padding: 10px" class="hide">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if marketing_expenses %}
+                                    <h3>{{ marketing_expenses.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Marketing Expenses</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <a href="/panel/{{ user.id }}/marketing/expenses/new/" class="btn btn-info btn-sm">
+                        Enter New Marketing Expense <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div><br/>
+
+                <div class="row">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">List of Marketing Expenses</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="marketing-expense-list" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product</th>
+                                        <th>Batch Number</th>
+                                        <th>Manufacturing Date</th>
+                                        <th>Expiry Date</th>
+                                        <th>Barcode</th>
+                                        <th>Custodian</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for prod in marketing_expenses %}
+                                        <tr>
+                                            <td>{{ prod.id }}</td>
+                                            <td>{{ prod.product.name }}</td>
+                                            <td>{{ prod.batch_number }}</td>
+                                            <td>{{ prod.manufacturing_date }}</td>
+                                            <td>{{ prod.expiry_date }}</td>
+                                            <td>{{ prod.barcode }}</td>
+                                            <td>{{ prod.custodian | full_name }}</td>
+                                            <td>{{ prod.notes }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product</th>
+                                        <th>Batch Number</th>
+                                        <th>Manufacturing Date</th>
+                                        <th>Expiry Date</th>
+                                        <th>Barcode</th>
+                                        <th>Custodian</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>

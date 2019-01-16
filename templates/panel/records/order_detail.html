@@ -1,0 +1,143 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    {% load website_extras %}
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Page Header<small>Optional description</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if orders %}
+                                    <h4>{{ orders.count }}</h4>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Total Orders</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                {% if recent_orders %}
+                                    <h4>{{ recent_orders.count }}</h4>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Recent Orders</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="box box-widget widget-user-2">
+                        <div class="widget-user-header">
+                            <div class="widget-user-image">
+                                <img class="img-circle" src="/media/{{ top_employee.user | photo }}"
+                                     alt="{{ top_employee.user.user.username }}">
+                            </div>
+                            <!-- /.widget-user-image -->
+                            <h3 class="widget-user-username">
+                                {{ order.customer.name }}
+                            </h3>
+                            <h5 class="widget-user-desc">Customer</h5>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked">
+                                <li><a href="#">Recent Orders <span class="pull-right badge bg-aqua">{{ recent_orders.count }}</span></a></li>
+                                <li><a href="#">Total Orders <span class="pull-right badge bg-aqua">{{ orders.count }}</span></a></li>
+                                {% comment %}<li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
+                                <li><a href="#">Notes <span class="pull-right badge bg-red">842</span></a></li>{% endcomment %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="box box-solid box-info">
+                        <div class="box-header">
+                            <h4><strong>{{ order.product.name }}</strong></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <table>
+                                        
+                                    </table>
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        <strong>Date:</strong> {{ order.date }}
+                                    </p>
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        <strong>Customer:</strong>{{ order.customer.name }}
+                                    </p>
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        <strong>Invoice ID:</strong>{{ order.invoice.number }}
+                                    </p>
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        <strong>Quantity:</strong>{{ order.invoice.quantity }}
+                                    </p>
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        <strong>Amount:</strong>
+                                        {{ order.invoice.currency.symbol }} {{ order.invoice.total_amount | money_format }}
+                                    </p>
+                                    <p style="text-align: justify; margin-bottom: 10px">
+                                        <strong>Order Medium</strong>{{ order.medium }}
+                                    </p>
+                                </div>
+                                <div class="col-md-5">
+                                    <img src="/static/{{ order.product.image.name }}"
+                                     alt="{{ order.product.image.name }}" class="img-circle"><br/>
+                                    <strong>Notes</strong>
+                                    <p style="text-align: justify">{{ order.notes }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            Anything you want
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2016 <a href="#">DV Unlimited</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}
