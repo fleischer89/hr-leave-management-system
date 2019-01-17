@@ -34,7 +34,7 @@ def index(request, user_id):
     check_logged_in_user(request, user)
     employee = Employee.objects.get(user=user)
     leave_requests = LeaveRequest.objects.filter(employee=employee)
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     offerings = []
     sales = []
     tithes = []
@@ -93,7 +93,7 @@ def admin_departments(request, user_id, department_id):
     check_logged_in_user(request, user)
     employee = Employee.objects.get(user=user)
     departments = Department.objects.all()
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     show_profiles = display_profiles(employee)
     show_approvals = display_approvals(employee)
     return render_to_response('panel/profiles/departments.html',
@@ -167,7 +167,7 @@ def admin_employees(request, user_id, employee_id):
     check_logged_in_user(request, user)
     employee = Employee.objects.get(user=user)
     count = len(employees)
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
 
     if employee_id is not None:
         single_employee = Employee.objects.get(pk=employee_id)
@@ -190,7 +190,7 @@ def admin_employees(request, user_id, employee_id):
 
         employee_education = employee_education if employee_education is not None else None
         employee_info = employee_info[0] if employee_info is not None and len(employee_info) > 0 else None
-        employee_photo = employee_photo if employee_photo is not None and len(employee_photo) > 0 else None
+        employee_photo = employee_photo[0] if employee_photo is not None and len(employee_photo) > 0 else None
         emergency_contacts = emergency_contacts[0] if emergency_contacts is not None and len(emergency_contacts) > 0 else None
         dependants = dependants if dependants is not None else None
         show_profiles = display_profiles(employee)
@@ -219,7 +219,7 @@ def admin_employees_registered(request, user_id, employee_id):
     check_logged_in_user(request, user)
     employee = Employee.objects.get(user=user)
     count = len(employees)
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     created_employee = Employee.objects.get(pk=employee_id)
 
     registered = True
@@ -241,7 +241,7 @@ def admin_delete_employee(request, user_id, employee_id):
     employee = Employee.objects.get(user=user)
     employees = Employee.objects.all()
     count = len(employees)
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     deleted_employee = False
     default_password = '%s' % RANDOM_PASSWORD
     show_profiles = display_profiles(employee)
@@ -487,7 +487,7 @@ def admin_new_employee(request, user_id):
 
             return HttpResponseRedirect("/panel/%s/employee_registered/%s" % (user.id, employee.id))
     user = UserProfile.objects.get(pk=user_id)
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     relatives_count = [1, 2, 3, 4, 5, 6, 7]
     education_count = [1, 2, 3, 4]
     dependent_count = [1, 2, 3, 4]
@@ -523,6 +523,7 @@ def admin_update_employee(request, user_id, employee_id):
         update_employee = request.POST['update_employee'] if 'update_employee' in request.POST.keys() else None
         if employee_id is not None:
             emp = Employee.objects.get(pk=employee_id)
+            print emp
             if emp is not None:
                 # spiritual_name = request.POST['spiritual_name'] if 'spiritual_name' in request.POST.keys() else None
                 employee_photo = request.FILES['employee_photo'] if 'employee_photo' in request.FILES.keys() else None
@@ -739,10 +740,10 @@ def admin_update_employee(request, user_id, employee_id):
                                 name = request.POST[keys[0] + str(i)] if keys[0] + str(i) in request.POST.keys() else None
                                 type = request.POST[keys[1] + str(i)] if keys[1] + str(i) in request.POST.keys() else None
                                 organization = request.POST[keys[2] + str(i)] if keys[2] + str(i) in request.POST.keys() else None
-                                position = request.POST[keys[3] + str(i)] if keys[3] + str(i) in request.POST.keys() else False
-                                phone = request.POST[keys[4] + str(i)] if keys[4] + str(i) in request.POST.keys() else False
-                                email = request.POST[keys[5] + str(i)] if keys[5] + str(i) in request.POST.keys() else False
-                                address = request.POST[keys[6] + str(i)] if keys[6] + str(i) in request.POST.keys() else False
+                                position = request.POST[keys[3] + str(i)] if keys[3] + str(i) in request.POST.keys() else ''
+                                phone = request.POST[keys[4] + str(i)] if keys[4] + str(i) in request.POST.keys() else ''
+                                email = request.POST[keys[5] + str(i)] if keys[5] + str(i) in request.POST.keys() else ''
+                                address = request.POST[keys[6] + str(i)] if keys[6] + str(i) in request.POST.keys() else ''
 
                                 if (name is not None) and len(name) > 0:
                                     # references = add_reference_record(references, emp, name, type, organization,
@@ -759,9 +760,10 @@ def admin_update_employee(request, user_id, employee_id):
                                         reference.type = type
                                         reference.save()
 
+                print "/panel/%s/employees/%s" % (user.id, emp.id)
                 return HttpResponseRedirect("/panel/%s/employees/%s" % (user.id, emp.id))
     user = UserProfile.objects.get(pk=user_id)
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     relatives_count = [1, 2, 3, 4, 5, 6, 7]
     education_count = [1, 2, 3, 4]
     dependent_count = [1, 2, 3, 4]
@@ -813,7 +815,7 @@ def admin_delete_leave_request(request, user_id, leave_request_id):
     for emp in department_employees:
         if emp != employee:
             leave_requests += LeaveRequest.objects.filter(employee=emp)
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     return render_to_response('panel/employee/leave_requests.html',
                               {'request': request, 'user': user, 'photo': photo, 'employee': employee,
                                'leave_requests': leave_requests, 'employees': department_employees,
@@ -849,7 +851,7 @@ def admin_leave_approvals(request, user_id, leave_request_id):
     for emp in department_employees:
         if emp != employee:
             leave_requests += LeaveRequest.objects.filter(employee=emp)
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     return render_to_response('panel/employee/leave_approvals.html',
                               {'request': request, 'user': user, 'photo': photo, 'employee': employee,
                                'leave_requests': leave_requests, 'employees': department_employees,
@@ -864,7 +866,7 @@ def admin_leave_requests(request, user_id, leave_request_id):
     employee = Employee.objects.get(user=user)
     leave_requests = LeaveRequest.objects.filter(employee=employee)
     employee_leave = EmployeeLeave.objects.filter(employee=employee)
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     show_profiles = display_profiles(employee)
     show_approvals = display_approvals(employee)
     return render_to_response('panel/employee/leave_requests.html',
@@ -913,7 +915,7 @@ def admin_leave_request(request, user_id):
     employee_leave = EmployeeLeave.objects.filter(employee=employee)
     employees = Employee.objects.all()
     leave_types = LeaveType.objects.all()
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     return render_to_response('panel/employee/leave_request.html',
                               {'request': request, 'user': user, 'photo': photo, 'employee': employee,
                                'employees': employees, 'leave_types': leave_types, 'leave_requests': leave_requests,
@@ -932,7 +934,7 @@ def admin_absence_certifications(request, user_id, absence_certification_id):
     show_profiles = display_profiles(employee)
     show_approvals = display_approvals(employee)
     absence_certifications = AbsenceCertification.objects.all()
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     return render_to_response('panel/employee/absence_certifications.html',
                               {'request': request, 'user': user, 'photo': photo, 'employee': employee,
                                'employees': employees, 'absence_certifications': absence_certifications,
@@ -985,7 +987,7 @@ def admin_absence_certification(request, user_id):
     user = UserProfile.objects.get(pk=user_id)
     employees = Employee.objects.all()
     leave_types = LeaveType.objects.all()
-    photo = Photograph.objects.filter(user=user)
+    photo = get_photo(user)
     return render_to_response('panel/employee/absence_certification.html',
                               {'request': request, 'user': user, 'photo': photo, 'employee': employee,
                                'employees': employees, 'leave_types': leave_types, 'show_profiles': show_profiles,
@@ -1456,4 +1458,9 @@ def display_approvals(employee):
         if employee.role.name != "Employee":
             show_approvals = True
     return show_approvals
+
+
+def get_photo(user):
+    photo = Photograph.objects.filter(user=user)
+    return photo[0] if photo is not None and len(photo) > 0 else photo
 

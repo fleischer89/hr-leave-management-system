@@ -6,7 +6,7 @@
             <div class="user-panel">
                 <div class="pull-left image">
                     {% if photo %}
-                        <img src="/media/{{ user.photo.document.name }}" class="img-thumbnail" alt="User Image">
+                        <img src="/media/{{ photo.document.name }}" class="img-thumbnail" alt="User Image">
                     {% else %}
                         <img src="/media/photographs/avatar_error.jpg" class="img-circle" alt="User Image">
                     {% endif %}
