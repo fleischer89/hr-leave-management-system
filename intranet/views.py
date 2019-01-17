@@ -623,7 +623,8 @@ def admin_update_employee(request, user_id, employee_id):
                             emp_photo = Photograph.objects.create(user=user_profile, document=employee_photo)
                             emp_photo.save()
                         #  EMERGENCY CONTACT
-                        emergency_contact = EmergencyContact.objects.get(pk=emergency_contact_id)
+                        emergency_contact = EmergencyContact.objects.get(pk=emergency_contact_id) \
+                            if emergency_contact_id is not None and len(emergency_contact_id) > 0 else None
                         if emergency_contact is not None:
                             emergency_contact.full_name=emergency_contact_name
                             emergency_contact.relationship=emergency_contact_relationship
@@ -634,7 +635,8 @@ def admin_update_employee(request, user_id, employee_id):
                             emergency_contact.save()
 
                         #  BANK DETAILS
-                        bank_detail = BankDetail.objects.get(pk=bank_detail_id)
+                        bank_detail = BankDetail.objects.get(pk=bank_detail_id) \
+                            if bank_detail_id is not None and len(bank_detail_id) > 0 else None
                         if bank_detail is not None:
                             bank_detail.bank_name=bank_name
                             bank_detail.branch=bank_branch
@@ -644,7 +646,7 @@ def admin_update_employee(request, user_id, employee_id):
 
                         #  BANK DETAILS
                         leave_days_allowed = 0 if len(leave_days_allowed) == 0 or leave_days_allowed is None else leave_days_allowed
-                        if employee_leave_id is not None:
+                        if employee_leave_id is not None and len(employee_leave_id) > 0:
                             employee_leave = EmployeeLeave.objects.get(pk=employee_leave_id)
                             if employee_leave is not None:
                                 employee_leave.no_of_days_allowed=int(leave_days_allowed)
@@ -851,6 +853,8 @@ def admin_leave_approvals(request, user_id, leave_request_id):
     for emp in department_employees:
         if emp != employee:
             leave_requests += LeaveRequest.objects.filter(employee=emp)
+    if employee.role.name == 'Administrator':
+        leave_requests = LeaveRequest.objects.filter()
     photo = get_photo(user)
     return render_to_response('panel/employee/leave_approvals.html',
                               {'request': request, 'user': user, 'photo': photo, 'employee': employee,
