@@ -19,11 +19,6 @@ urlpatterns = [
     # url(r'^(?P<user_id>\d+)?/attendance/new/?$', admin_new_attendance, name='admin_new_attendance'),
 
     url(r'^(?P<user_id>\d+)?/departments/?((?P<department_id>\d+)|)?/?$', admin_departments, name='admin_departments'),
-    url(r'^(?P<user_id>\d+)?/departments/new/?$', admin_new_department, name='admin_new_department'),
-    url(r'^(?P<user_id>\d+)?/update_department/?((?P<department_id>\d+)|)?/?$', admin_update_department,
-        name=', admin_update_department'),
-    url(r'^(?P<user_id>\d+)?/delete_department/?((?P<department_id>\d+)|)?/?$', admin_delete_department,
-        name='admin_delete_department'),
 
     url(r'^(?P<user_id>\d+)?/employee_registered/((?P<employee_id>\d+)|)?/?$', admin_employees_registered,
         name='admin_employees_registered'),

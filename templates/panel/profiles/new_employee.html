@@ -51,8 +51,7 @@
 
                 </div>
                 <div class="box-body">
-                    <form id="js-add-new-employee" method="post" action="/panel/{{ user.id }}/employees/new/"
-                          enctype="multipart/form-data">
+                    <form id="js-add-new-employee" method="post" action="/panel/{{ user.id }}/employees/new/">
                         <div class="row">
                             <div class="col-lg-6 col-sm-12">
                                 <div class="form-group has-feedback">
@@ -171,10 +170,10 @@
 
                                 </div>
                                 <div class="form-group has-feedback">
-                                    <input name="languages" type="text" class="form-control" placeholder="Languages">
+                                    <input name="region" type="text" class="form-control" placeholder="Region">
                                 </div>
                                 <div class="form-group has-feedback">
-                                    <input name="region" type="text" class="form-control" placeholder="Region">
+                                    <input name="languages" type="text" class="form-control" placeholder="Languages">
 
                                 </div>
                                 <div class="form-group has-feedback">
@@ -239,13 +238,12 @@
                                            placeholder="Start Date">
                                 </div>
                             </div>
-
                             <div class="col-md-6">
                                 <h4>Dependents Information</h4>
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Photograph</th>
+                                            <th>Photo</th>
                                             <th>Name</th>
                                             <th>Relationship</th>
                                             <th>Date of Birth</th>
@@ -452,7 +450,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <h4>Educational Background</h4>
@@ -533,7 +530,6 @@
                                 </table>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <h4>Employee References</h4>
@@ -610,7 +606,6 @@
                                 </table>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-lg-6 col-sm-12">
 
@@ -646,3 +641,4 @@
     </footer>
 
 {% endblock %}
+

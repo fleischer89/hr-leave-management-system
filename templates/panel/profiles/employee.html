@@ -51,7 +51,7 @@
                         Back to Employees <i class="fa fa-arrow-circle-left"></i>
                     </a>
 
-                    <a href="/panel/{{ user.id }}/update_employee/{{ employee.id }}" id="js-update-employee-request"
+                    <a href="/panel/{{ user.id }}/update_employee/{{ single_employee.id }}" id="js-update-employee-request"
                        class="btn btn-primary btn-sm">
                         {% csrf_token %}
                         Update Employee Record <i class="fa fa-edit"></i>
@@ -491,4 +491,5 @@
     </footer>
 
 {% endblock %}
+
 

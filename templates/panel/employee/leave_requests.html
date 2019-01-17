@@ -104,7 +104,8 @@
                             <h3 class="box-title">List of Leave Requests</h3>
                         </div>
                         <div class="box-body">
-                            <table id="leave-requests-list" class="display table table-bordered table-striped">
+                            <div class="table-responsive">
+                            <table id="leave-requests-list" class="display table table-bordered table-striped table-vcenter">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -114,7 +115,7 @@
                                         <th>No. Days</th>
                                         <th>Reliever</th>
                                         <th>Approved</th>
-                                        <th>Delete</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -157,10 +158,11 @@
                                         <th>No. Days</th>
                                         <th>Reliever</th>
                                         <th>Approved</th>
-                                        <th>Delete</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -181,3 +183,4 @@
     </footer>
 
 {% endblock %}
+

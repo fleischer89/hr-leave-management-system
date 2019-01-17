@@ -1,3 +1,4 @@
+{% load website_extras %}
 {% extends "panel/base.html" %}
 {% block content %}
 
@@ -63,5 +64,5 @@
     <script src="/static/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/app.min.js"></script>
-    <script src="/static/js/panel.app.js"></script>
+    <script src="/static/js/panel.app.js?_={{ "test" | timestamp }}"></script>
 {% endblock %}

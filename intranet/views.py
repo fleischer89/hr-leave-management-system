@@ -19,6 +19,7 @@ from sendsms.message import SmsMessage
 from datetime import *
 from helpers import *
 from api import *
+import re
 # from intranet.forms import UploadPhotographForm
 # from intranet.templatetags.website_extras import *
 
@@ -95,120 +96,10 @@ def admin_departments(request, user_id, department_id):
     photo = Photograph.objects.filter(user=user)
     show_profiles = display_profiles(employee)
     show_approvals = display_approvals(employee)
-    if department_id is not None:
-        department = Department.objects.get(pk=department_id)
-        return render_to_response('panel/profiles/departments.html',
-                                  {'request': request, 'user': user, 'photo': photo, 'employee': employee,
-                                   'department': department, 'departments': departments, 'show_profiles': show_profiles,
-                                   'show_approvals': show_approvals})
     return render_to_response('panel/profiles/departments.html',
                               {'request': request, 'user': user, 'photo': photo, 'employee': employee,
                                'departments': departments, 'show_profiles': show_profiles,
                                'show_approvals': show_approvals})
-
-
-@login_required
-@csrf_exempt
-def admin_new_department(request, user_id):
-    user = UserProfile.objects.get(pk=user_id)
-    check_logged_in_user(request, user)
-    employee = Employee.objects.get(user=user)
-    photo = Photograph.objects.filter(user=user)
-    employees = Employee.objects.all()
-    departments = Department.objects.all()
-
-    show_profiles = display_profiles(employee)
-    show_approvals = display_approvals(employee)
-    if request.method == 'POST':
-        print request.POST
-        name = request.POST['name'] if 'name' in request.POST.keys() else None
-        supervisors = request.POST['supervisors'] if 'supervisors' in request.POST.keys() else None
-        purpose = request.POST['purpose'] if 'purpose' in request.POST.keys() else None
-        description = request.POST['description'] if 'description' in request.POST.keys() else None
-
-        department = Department.objects.create(name = name, supervisors = supervisors, purpose = purpose,
-                                               description = description)
-        department.save()
-        return HttpResponseRedirect("/panel/%s/departments/" % user.id)
-
-    return render_to_response('panel/profiles/new_department.html',
-                              {'request': request, 'user': user, 'photo': photo, 'employees': employees,
-                               'employee': employee, 'departments': departments, 'show_profiles': show_profiles,
-                               'show_approvals': show_approvals})
-
-
-@login_required
-@csrf_exempt
-def admin_update_department(request, user_id, department_id):
-    user = UserProfile.objects.get(pk=user_id)
-    check_logged_in_user(request, user)
-    employee = Employee.objects.get(user=user)
-    photo = Photograph.objects.filter(user=user)
-    employees = Employee.objects.all()
-    departments = Department.objects.all()
-
-    show_profiles = display_profiles(employee)
-    show_approvals = display_approvals(employee)
-    if department_id is not None:
-        department = Department.objects.get(pk=department_id)
-        if department is not None:
-            if request.method == 'POST':
-                update_department = request.POST['update_department'] if 'update_department' in request.POST.keys() else None
-                print request.POST
-                if update_department == 'Update':
-                    name = request.POST['name'] if 'name' in request.POST.keys() else None
-                    supervisors = request.POST['supervisors'] if 'supervisors' in request.POST.keys() else None
-                    purpose = request.POST['purpose'] if 'purpose' in request.POST.keys() else None
-                    description = request.POST['description'] if 'description' in request.POST.keys() else None
-
-                    department.name = name
-                    department.supervisors = supervisors
-                    department.purpose = purpose
-                    department.description = description
-                    department.save()
-                    return HttpResponseRedirect("/panel/%s/departments/%s" % (user.id, department.id))
-
-            return render_to_response('panel/profiles/update_department.html',
-                                      {'request': request, 'user': user, 'photo': photo, 'employees': employees,
-                                       'employee': employee, 'departments': departments, 'department': department,
-                                       'show_profiles': show_profiles, 'show_approvals': show_approvals})
-
-    return render_to_response('panel/profiles/departments.html',
-                              {'request': request, 'user': user, 'photo': photo, 'employees': employees,
-                               'employee': employee, 'departments': departments, 'show_profiles': show_profiles,
-                               'show_approvals': show_approvals})
-
-
-@login_required
-@csrf_exempt
-def admin_delete_department(request, user_id, department_id):
-    user = UserProfile.objects.get(pk=user_id)
-    check_logged_in_user(request, user)
-    employee = Employee.objects.get(user=user)
-    departments = Department.objects.all()
-    photo = Photograph.objects.filter(user=user)
-    show_profiles = display_profiles(employee)
-    show_approvals = display_approvals(employee)
-
-    if request.method == 'POST':
-        delete_department = request.POST['delete_department'] if 'delete_department' in request.POST.keys() else None
-        if department_id is not None:
-            department = Department.objects.get(pk=department_id)
-            if department is not None and delete_department == 'Delete':
-                department.delete()
-                deleted_department = True
-                return HttpResponseRedirect("/panel/%s/departments/" % user.id)
-                # return render_to_response('panel/profiles/departments.html',
-                #                           {'user': user, 'departments': departments, 'employee': employee,
-                #                            'photo': photo,  'show_profiles': show_profiles,
-                #                            'deleted_department': deleted_department, 'show_approvals': show_approvals})
-
-    show_profiles = display_profiles(employee)
-    show_approvals = display_approvals(employee)
-
-    return render_to_response('panel/profiles/departments.html',
-                              {'user': user, 'departments': departments, 'employee': employee, 'photo': photo,
-                               'show_profiles': show_profiles, 'show_approvals': show_approvals})
 
 
 def add_education_record(education, employee, programme, qualification, institution, start_date, end_date, short_course,
@@ -299,7 +190,7 @@ def admin_employees(request, user_id, employee_id):
 
         employee_education = employee_education if employee_education is not None else None
         employee_info = employee_info[0] if employee_info is not None and len(employee_info) > 0 else None
-        employee_photo = employee_photo[0] if employee_photo is not None and len(employee_photo) > 0 else None
+        employee_photo = employee_photo if employee_photo is not None and len(employee_photo) > 0 else None
         emergency_contacts = emergency_contacts[0] if emergency_contacts is not None and len(emergency_contacts) > 0 else None
         dependants = dependants if dependants is not None else None
         show_profiles = display_profiles(employee)
@@ -554,6 +445,7 @@ def admin_new_employee(request, user_id):
                         percentage = request.POST[keys[6] + str(i)] if keys[6] + str(i) in request.POST.keys() else False
 
                         if (name is not None) and len(name) > 0:
+                            dob = dob if (re.compile("\d{0,4}-\d{0,2}-\d{0,2}")).match(dob) else None
                             beneficiary_records = add_beneficiary_record(beneficiary_records, employee, name, dob, phone,
                                                                          email, relationship, residential, percentage)
 
@@ -570,6 +462,7 @@ def admin_new_employee(request, user_id):
 
                         if (name is not None) and len(name) > 0:
                             if (dob is not None) and len(dob) > 0:
+                                dob = dob if (re.compile("\d{0,4}-\d{0,2}-\d{0,2}")).match(dob) else None
                                 birth_date = datetime.strptime(dob, DATE_FORMAT)
                                 age = calculate_age(birth_date)
                             dependents = add_dependent_record(dependents, employee, name, relationship, dob, age,
@@ -583,10 +476,10 @@ def admin_new_employee(request, user_id):
                         name = request.POST[keys[0] + str(i)] if keys[0] + str(i) in request.POST.keys() else None
                         type = request.POST[keys[1] + str(i)] if keys[1] + str(i) in request.POST.keys() else None
                         organization = request.POST[keys[2] + str(i)] if keys[2] + str(i) in request.POST.keys() else None
-                        position = request.POST[keys[3] + str(i)] if keys[3] + str(i) in request.POST.keys() else False
-                        phone = request.POST[keys[4] + str(i)] if keys[4] + str(i) in request.POST.keys() else False
-                        email = request.POST[keys[5] + str(i)] if keys[5] + str(i) in request.POST.keys() else False
-                        address = request.POST[keys[6] + str(i)] if keys[6] + str(i) in request.POST.keys() else False
+                        position = request.POST[keys[3] + str(i)] if keys[3] + str(i) in request.POST.keys() else ''
+                        phone = request.POST[keys[4] + str(i)] if keys[4] + str(i) in request.POST.keys() else ''
+                        email = request.POST[keys[5] + str(i)] if keys[5] + str(i) in request.POST.keys() else ''
+                        address = request.POST[keys[6] + str(i)] if keys[6] + str(i) in request.POST.keys() else ''
 
                         if (name is not None) and len(name) > 0:
                             references = add_reference_record(references, employee, name, type, organization, position,
@@ -1563,3 +1456,4 @@ def display_approvals(employee):
         if employee.role.name != "Employee":
             show_approvals = True
     return show_approvals
+

@@ -1,0 +1,153 @@
+{% extends "panel/base.html" %}
+{% block content %}
+
+    {% load website_extras %}
+    <!-- Main Header -->
+    {% include "panel/includes/main_header.html" %}
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include "panel/includes/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="page-header">Add New Employee<small class="hide">Optional description</small></h1>
+            <ol class="breadcrumb hide">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Your Page Content Here -->
+            <div style="padding: 10px">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                {% if employees %}
+                                    <h3>{{ employees.count }}</h3>
+                                {% else %}
+                                    <h3>0</h3>
+                                {% endif %}
+                                <p>Employees</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-user"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More Info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-info">
+                <div class="box-header">
+
+                </div>
+                <div class="box-body">
+                    <form action="/panel/{{ user.id }}/employees/new/" method="post" id="js-add-new-employee">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group has-feedback">
+                                    <label>
+                                        <select name="user" class="form-control">
+                                            <option value="0">Select User</option>
+                                            {% for user in users %}
+                                                <option value="{{ user.id }}">{{ user.last_name }} {{ user.first_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="title" type="text" class="form-control" placeholder="Title">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label>
+                                        <select name="departments" class="form-control">
+                                            <option value="0">Select Department</option>
+                                            {% for department in departments %}
+                                                <option value="{{ department.id }}">{{ department.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input name="supervisor" type="text" class="form-control" placeholder="Supervisor">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <div class="form-group has-feedback form-inline">
+                                        <div class="checkbox">
+                                            <label for="is_supervisor">
+                                                <input type="checkbox" name="is_supervisor" id="is_supervisor" value="True">
+                                                Is Supervisor
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="form-group has-feedback">
+                                    <input type="text" name="location" id="location" placeholder="Office location"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input type="text" name="office_email" id="office_email" placeholder="Office Email"
+                                           class="form-control">
+                                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input type="text" name="office_phone" id="office_phone" placeholder="Office Phone"
+                                           class="form-control">
+                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <div class="form-group has-feedback">
+                                        <input class="input-sm input-s datepicker-input form-control" type="text" style="font-size: 14px"
+                                               name="start_date" data-date-format="yyyy-mm-dd" placeholder="Start Date">
+                                        <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-12">
+
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+                                <br/>
+                                <button name="add_new_employee" type="submit" class="btn btn-success" data-dismiss="modal">
+                                    Add New Employee
+                                </button>
+                                &nbsp;
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            {% comment %}Training Leaders, Transforming Generations, Representing Divinity!!!{% endcomment %}
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="http://smartempiregh.com">Smart Empire</a>.</strong> All rights reserved.
+    </footer>
+
+{% endblock %}

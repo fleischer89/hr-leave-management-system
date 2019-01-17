@@ -26,7 +26,7 @@ NUMBER_RANGE = '0123456789'
 TWILIO_ACCOUNT_SID = "AC841befe1ba977e57c76bf7e3f3f7d909"
 TWILIO_AUTH_TOKEN = "f7b8fc14043ee29ebe5fb57eace72a83"
 NASARA_API_KEY = "569e6312da155569e6312da1c9"
-RANDOM_PASSWORD = "p@ssw0rd1234"
+RANDOM_PASSWORD = "p@ssw0rd"
 
 
 ##############################
@@ -266,4 +266,5 @@ def get_range_of_dates(start, end):
 
 def build_response(response):
     return json.dumps(dict(message='OK', code=0, data=response))
+
 
