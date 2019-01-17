@@ -2,3 +2,5 @@
 conf/config.ini
 static/*
 static_directory/*
+*.pyc
+*__pycache__*
